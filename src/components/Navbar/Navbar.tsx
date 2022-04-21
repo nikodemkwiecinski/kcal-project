@@ -13,24 +13,24 @@ interface Props {
 const Navbar: React.FC<Props> = () => {
   const [userLoged, setUserLoged] = useState(false);
   const [activeIcon, setActiveIcon] = useState('');
-  
-  let icons: Array<IconProps | void> = userLoged ?
-  [ICONS[0], ...USERICONS].map(elem => {
-    <li>
-      <p>{elem.description}</p>
+
+  const icons: Array<IconProps> = userLoged ? [ICONS[1], ...USERICONS] : [ICONS[0]];
+
+  const navIcons = icons.map(elem => (
+    <li key={elem.id}>
+      <p>
+        {elem.description}
+      </p>
       {elem.jsx}
     </li>
-  }):
-  [ICONS[1]].map(elem => {
-    <li>
-      
-    </li>
-  });
+  ))
+
+  console.log(navIcons)
 
   return (
     <nav>
         <ul>
-          {icons}
+          {navIcons}
         </ul>
         <span className='text-white'>
           <FontAwesomeIcon icon={brands('facebook')} />
