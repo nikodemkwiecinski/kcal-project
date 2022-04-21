@@ -1,5 +1,6 @@
 import React from 'react';
-import {createRoot} from 'react-dom/client'
+// @ts-ignore
+import {createRoot } from 'react-dom/client'
 
 import App from './App';
 
@@ -7,5 +8,5 @@ const container = document.getElementById('root')
 
 if(container){
   const root = createRoot(container);
-  root.render(<App test={1} test2={'Test'}/>)
+  root.render(<App/>)
 }

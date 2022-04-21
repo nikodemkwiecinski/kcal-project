@@ -2,15 +2,12 @@ import React from 'react';
 
 import './style.css'
 
-interface TestProps{
-  test: number,
-  test2: string
-}
+import Navbar from './components/Navbar/Navbar'
 
-const App: React.FC<TestProps> = ({test, test2}) => {
+const App: React.FC = () => {
   return (
     <>
-      <h1 className='text-red-800'>{test2}{test}</h1>
+      <Navbar></Navbar>
     </>
   )
 }
