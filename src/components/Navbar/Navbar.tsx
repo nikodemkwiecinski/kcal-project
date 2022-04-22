@@ -25,8 +25,6 @@ const Navbar: React.FC<Props> = () => {
     </li>
   ))
 
-  console.log(navIcons)
-
   return (
     <nav>
         <ul>
