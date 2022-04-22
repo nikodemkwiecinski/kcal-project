@@ -29,7 +29,7 @@ const reducer = (state: Array<UserInfo>, action: UserAction): Array<UserInfo> =>
   }
 }
 
-const UserStoreContext = createContext<Array<UserInfo> | ProviderType>([]);
+export const UserStoreContext = createContext<Array<UserInfo> | ProviderType>([]);
 
 const UserStore: React.FC<ReactNode> = ({children}) => {
   const [users, dispatch] = useReducer(reducer, initialUsers)
