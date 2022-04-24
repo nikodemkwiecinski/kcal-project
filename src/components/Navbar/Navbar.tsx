@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import {Link, Outlet} from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { brands, solid } from '@fortawesome/fontawesome-svg-core/import.macro'
@@ -14,27 +14,42 @@ const Navbar: React.FC<Props> = () => {
   const [userLoged, setUserLoged] = useState(false);
   const [activeIcon, setActiveIcon] = useState('');
 
-  const icons: Array<IconProps> = userLoged ? [ICONS[1], ...USERICONS] : [ICONS[0]];
+  const icons: Array<IconProps> = [...USERICONS];
 
-  const navIcons = icons.map(elem => (
+  const navIcons: Array<JSX.Element> | null = userLoged ? icons.map(elem => (
     <li key={elem.id}>
-      <p>
+      <Link to={`${elem.path}`}>
         {elem.description}
-      </p>
+      </Link>
       {elem.jsx}
     </li>
-  ))
+  )) :
+  null;
+
+  const logIcon: JSX.Element = !userLoged ? 
+    <li key={ICONS[0].id}>
+      {ICONS[0].jsx}
+      <p>{ICONS[0].description}</p>
+    </li> :
+    <li key={ICONS[1].id}>
+    {ICONS[1].jsx}
+    <Link to={`${ICONS[1].path}`}>{ICONS[1].description}</Link>
+    </li>;
 
   return (
-    <nav>
-        <ul>
-          {navIcons}
-        </ul>
-        <span className='text-white'>
-          <FontAwesomeIcon icon={brands('facebook')} />
-          <FontAwesomeIcon icon={brands('instagram')}/>
-        </span>
-    </nav>
+    <>
+      <nav>
+          <ul>
+            {logIcon}
+            {navIcons}
+          </ul>
+          <span className='text-black'>
+            <FontAwesomeIcon icon={brands('facebook')} />
+            <FontAwesomeIcon icon={brands('instagram')}/>
+          </span>
+      </nav>
+      <Outlet/>
+    </>
   )
 }
 
