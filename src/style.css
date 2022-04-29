@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+div#root {
+  @apply flex;
+}
+
+section.right-panel{
+  @apply grow;
+}
+
+div.right-panel-content{
+  @apply min-h-9/10;
+}

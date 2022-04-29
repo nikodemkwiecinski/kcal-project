@@ -1,10 +1,15 @@
 import React from 'react';
 
+import Footer from '../Footer/Footer';
+
 const NoPage: React.FC = () => {
   return (
-    <div>
-      Error 404
-    </div>
+    <section className='right-panel'>
+      <div className='right-panel-content'>
+        Error 404
+      </div>
+      <Footer></Footer>
+    </section>
   )
 }
 

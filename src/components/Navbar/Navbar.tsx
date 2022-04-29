@@ -38,12 +38,12 @@ const Navbar: React.FC<Props> = () => {
 
   return (
     <>
-      <nav>
+      <nav className='bg-light-blue xl:w-64 lg:w-40 h-screen sticky top-0'>
           <ul>
             {logIcon}
             {navIcons}
           </ul>
-          <span className='text-black'>
+          <span className='text-white'>
             <FontAwesomeIcon icon={brands('facebook')} />
             <FontAwesomeIcon icon={brands('instagram')}/>
           </span>

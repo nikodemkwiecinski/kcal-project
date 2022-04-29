@@ -1,10 +1,15 @@
 import React from 'react';
 
+import Footer from '../Footer/Footer';
+
 const Home: React.FC = () => {
   return (
-    <div>
-      Home Page
-    </div>
+    <section className='right-panel'>
+      <div className='right-panel-content'>
+        Home Page
+      </div>
+      <Footer></Footer>
+    </section>
   )
 }
 
