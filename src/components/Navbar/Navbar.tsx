@@ -27,25 +27,27 @@ const Navbar: React.FC<Props> = () => {
   null;
 
   const logIcon: JSX.Element = !userLoged ? 
-    <li key={ICONS[0].id}>
+    <li key={ICONS[0].id} className="mx-auto">
       {ICONS[0].jsx}
       <p>{ICONS[0].description}</p>
     </li> :
-    <li key={ICONS[1].id}>
+    <li key={ICONS[1].id} className="mx-auto">
     {ICONS[1].jsx}
     <Link to={`${ICONS[1].path}`}>{ICONS[1].description}</Link>
     </li>;
 
   return (
     <>
-      <nav className='bg-light-blue xl:w-64 lg:w-40 h-screen sticky top-0'>
-          <ul>
+      <nav className='flex flex-col bg-light-blue xl:w-64 lg:w-40 h-screen sticky top-0'>
+          <ul className='flex grow'>
             {logIcon}
             {navIcons}
           </ul>
-          <span className='text-white'>
-            <FontAwesomeIcon icon={brands('facebook')} />
-            <FontAwesomeIcon icon={brands('instagram')}/>
+          <span className='text-white text-3xl mb-4'>
+            <div className='flex justify-between bottom-4'>
+              <FontAwesomeIcon icon={brands('facebook')}  className="ml-8"/>
+              <FontAwesomeIcon icon={brands('instagram')} className="mr-8"/>
+            </div>
           </span>
       </nav>
       <Outlet/>
