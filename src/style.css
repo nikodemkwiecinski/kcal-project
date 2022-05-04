@@ -13,3 +13,7 @@ section.right-panel{
 div.right-panel-content{
   @apply min-h-9/10;
 }
+
+.active{
+  @apply text-dark-blue;
+}
