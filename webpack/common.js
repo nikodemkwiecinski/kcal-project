@@ -16,6 +16,10 @@ module.exports = {
         use: "babel-loader",
         exclude: /node_modules/,
       },
+      {
+        test: /\.html$/,
+        use: "html-loader",
+      },
     ],
   },
   resolve: {
