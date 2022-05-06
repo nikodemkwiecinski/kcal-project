@@ -2,19 +2,18 @@ import React, {useEffect, useState} from 'react';
 import {Link, Outlet, useLocation} from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { brands, solid } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { brands } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 import {ICONS, IconProps, USERICONS} from './Icons/Icons'
 
 import ListElement from '../ListElement/ListElement'
 
-interface Props {
+export interface Props {
   userLoged: boolean
+  setIsUserLoged: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Navbar: React.FC<Props> = ({userLoged}) => {
-  
-  let location = useLocation();
+const Navbar: React.FC<Props> = ({userLoged, setIsUserLoged}) => {
   
   const icons: Array<IconProps> = [...USERICONS];
 
@@ -45,15 +44,15 @@ const Navbar: React.FC<Props> = ({userLoged}) => {
 
   return (
     <>
-      <nav className='flex flex-col bg-light-blue xl:w-64 lg:w-40 h-screen sticky top-0'>
-          <ul className='flex flex-col grow text-white xl:text-xl'>
+      <nav className='flex flex-col bg-light-blue 2xl:w-64 xl:w-40 lg:w-32 h-screen sticky top-0'>
+          <ul className='flex flex-col grow text-white 2xl:text-xl xl:text-lg lg:text-md'>
             {logIcon}
             {navIcons}
           </ul>
-          <span className='text-white xl:text-4xl lg:text-3xl mb-4'>
+          <span className='text-white 2xl:text-4xl xl:text-2xl lg:text-xl mb-4'>
             <div className='flex justify-between bottom-4'>
-              <FontAwesomeIcon icon={brands('facebook')}  className="xl:ml-16 lg:ml-8"/>
-              <FontAwesomeIcon icon={brands('instagram')} className="xl:mr-16 lg:mr-8"/>
+              <FontAwesomeIcon icon={brands('facebook')}  className="2xl:ml-16 xl:ml-8 lg:ml-4"/>
+              <FontAwesomeIcon icon={brands('instagram')} className="2xl:mr-16 xl:mr-8 lg:mr-4"/>
             </div>
           </span>
       </nav>

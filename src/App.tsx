@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Calculator from './components/Calculator/Calculator';
@@ -11,10 +11,13 @@ import Profile from './components/Profile/Profile';
 import './style.css'
 
 const App: React.FC = () => {
+
+  const [isUserLoged, setIsUserLoged] = useState<boolean>(false);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Navbar userLoged={true}/>}>
+        <Route path='/' element={<Navbar userLoged={isUserLoged} setIsUserLoged={setIsUserLoged}/>}>
           <Route index element={<Home/>}/>
           <Route path='meals' element={<Meals/>}/>
           <Route path='calculator' element={<Calculator/>}/>

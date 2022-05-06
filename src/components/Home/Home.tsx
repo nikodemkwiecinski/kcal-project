@@ -7,7 +7,7 @@ const Home: React.FC = () => {
   return (
     <section className='right-panel'>
       <div className="right-panel-content relative">
-        <h1 className='absolute text-white text-7xl font-bold bottom-40 right-20'>
+        <h1 className='absolute text-white 2xl:text-7xl xl:text-5xl lg:text-4xl font-bold 2xl:bottom-40 xl:bottom-24 lg:bottom-16 right-20'>
           Count your way to 
           <br className='block mt-4'/>
           dream weight.

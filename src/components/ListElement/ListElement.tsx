@@ -17,7 +17,7 @@ const ListElement: React.FC<IconProps> =  ({description, id, jsx, path}) => {
   },[location])
 
   return (
-    <li className={`mx-auto mt-16 cursor-pointer ${isActive ? 'active' : ''}`} >
+    <li className={`mx-auto 2xl:mt-16 lg:mt-12 cursor-pointer ${isActive ? 'active' : ''}`} >
       <Link to={`${path}`} className="block font-bold">
         {description}
         {jsx}
