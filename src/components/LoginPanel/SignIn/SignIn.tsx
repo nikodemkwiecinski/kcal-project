@@ -5,6 +5,7 @@ const SignIn: React.FC = () => {
     <form action="">
       <input type="text" name="" id="" />
       <input type="text" name="" id="" />
+      <input type="text" name="" id="" />
       <input type="submit" value="" />
     </form>
   )

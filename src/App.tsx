@@ -33,6 +33,7 @@ const App: React.FC = () => {
             <Home 
               blurToogle={blurToogle}
               userLoged={isUserLoged}
+              setBlurToogle={setBlurToogle}
               setIsUserLoged={setIsUserLoged}
             />}/>
           <Route path='meals' element={<Meals />}/>
