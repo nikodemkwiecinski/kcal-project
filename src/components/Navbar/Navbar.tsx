@@ -7,12 +7,13 @@ import { brands } from '@fortawesome/fontawesome-svg-core/import.macro'
 import {ICONS, IconProps, USERICONS} from './Icons/Icons'
 
 import ListElement from '../ListElement/ListElement'
+import LoginPanel from '../LoginPanel/LoginPanel';
 
 export interface Props {
-  userLoged: boolean
-  setIsUserLoged: React.Dispatch<React.SetStateAction<boolean>>
   blurToogle: boolean
+  userLoged: boolean
   setBlurToogle: React.Dispatch<React.SetStateAction<boolean>>
+  setIsUserLoged: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const Navbar: React.FC<Props> = ({userLoged, setIsUserLoged, blurToogle, setBlurToogle}) => {
@@ -34,14 +35,16 @@ const Navbar: React.FC<Props> = ({userLoged, setIsUserLoged, blurToogle, setBlur
 
   const logIcon: JSX.Element = !userLoged ? 
     <li key={ICONS[0].id} className="mx-auto mt-8 cursor-pointer" onClick={() => setBlurToogle(prevState => !prevState)}>
-      {ICONS[0].jsx}
-      <p className="mt-2 font-bold">{ICONS[0].description}</p>
+      <Link to={`${ICONS[0].path}`} className='block font-bold'>
+        {ICONS[0].jsx}
+        <p className="mt-2 font-bold">{ICONS[0].description}</p>
+      </Link>
     </li> :
     <li key={ICONS[1].id} className="mx-auto mt-8">
-    <Link to={`${ICONS[1].path}`} className="block font-bold">
-      {ICONS[1].jsx}
-      {ICONS[1].description}
-    </Link>
+      <Link to={`${ICONS[1].path}`} className="block font-bold">
+        {ICONS[1].jsx}
+        {ICONS[1].description}
+      </Link>
     </li>;
 
   return (

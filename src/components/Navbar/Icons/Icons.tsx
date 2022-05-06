@@ -11,7 +11,7 @@ export interface IconProps {
 }
 
 export const ICONS: Array<IconProps> = [
-  {jsx: <FontAwesomeIcon icon={solid('arrow-right-to-bracket')} className="block mx-auto 2xl:text-4xl xl:text-2xl lg:text-xl mb-2"/>, description: 'Log in', id: 1}, 
+  {jsx: <FontAwesomeIcon icon={solid('arrow-right-to-bracket')} className="block mx-auto 2xl:text-4xl xl:text-2xl lg:text-xl mb-2"/>, description: 'Log in', id: 1, path: '/login'}, 
   {jsx: <FontAwesomeIcon icon={solid('arrow-right-from-bracket')} className="block mx-auto 2xl:text-4xl xl:text-2xl lg:text-xl mb-2"/>, description: 'Log out', id: 2, path: '/'}
 ]
 

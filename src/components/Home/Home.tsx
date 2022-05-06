@@ -6,8 +6,6 @@ import img from '../../images/blueberries.jpg'
 import {BlurProps} from '../../App'
 
 const Home: React.FC<BlurProps> = ({blurToogle}) => {
-
-  console.log(blurToogle)
   return (
     <section className={`right-panel ${blurToogle ? 'active-blur' : ''}`}>
       <div className="right-panel-content relative">
