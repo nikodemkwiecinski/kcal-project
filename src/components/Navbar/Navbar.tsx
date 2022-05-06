@@ -11,9 +11,11 @@ import ListElement from '../ListElement/ListElement'
 export interface Props {
   userLoged: boolean
   setIsUserLoged: React.Dispatch<React.SetStateAction<boolean>>
+  blurToogle: boolean
+  setBlurToogle: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Navbar: React.FC<Props> = ({userLoged, setIsUserLoged}) => {
+const Navbar: React.FC<Props> = ({userLoged, setIsUserLoged, blurToogle, setBlurToogle}) => {
   
   const icons: Array<IconProps> = [...USERICONS];
 
@@ -31,7 +33,7 @@ const Navbar: React.FC<Props> = ({userLoged, setIsUserLoged}) => {
   null;
 
   const logIcon: JSX.Element = !userLoged ? 
-    <li key={ICONS[0].id} className="mx-auto mt-8">
+    <li key={ICONS[0].id} className="mx-auto mt-8 cursor-pointer" onClick={() => setBlurToogle(prevState => !prevState)}>
       {ICONS[0].jsx}
       <p className="mt-2 font-bold">{ICONS[0].description}</p>
     </li> :
@@ -44,7 +46,7 @@ const Navbar: React.FC<Props> = ({userLoged, setIsUserLoged}) => {
 
   return (
     <>
-      <nav className='flex flex-col bg-light-blue 2xl:w-64 xl:w-40 lg:w-32 h-screen sticky top-0'>
+      <nav className={`flex flex-col bg-light-blue 2xl:w-64 xl:w-40 lg:w-32 h-screen sticky top-0 ${blurToogle ? 'blur-sm' : ''}`}>
           <ul className='flex flex-col grow text-white 2xl:text-xl xl:text-lg lg:text-md'>
             {logIcon}
             {navIcons}

@@ -10,6 +10,10 @@ section.right-panel{
   @apply grow;
 }
 
+.active-blur{
+  @apply blur-sm;
+}
+
 div.right-panel-content{
   @apply min-h-9/10;
 }
