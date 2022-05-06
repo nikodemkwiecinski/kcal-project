@@ -7,7 +7,6 @@ import { brands } from '@fortawesome/fontawesome-svg-core/import.macro'
 import {ICONS, IconProps, USERICONS} from './Icons/Icons'
 
 import ListElement from '../ListElement/ListElement'
-import LoginPanel from '../LoginPanel/LoginPanel';
 
 export interface Props {
   blurToogle: boolean
@@ -35,10 +34,8 @@ const Navbar: React.FC<Props> = ({userLoged, setIsUserLoged, blurToogle, setBlur
 
   const logIcon: JSX.Element = !userLoged ? 
     <li key={ICONS[0].id} className="mx-auto mt-8 cursor-pointer" onClick={() => setBlurToogle(prevState => !prevState)}>
-      <Link to={`${ICONS[0].path}`} className='block font-bold'>
-        {ICONS[0].jsx}
-        <p className="mt-2 font-bold">{ICONS[0].description}</p>
-      </Link>
+      {ICONS[0].jsx}
+      <p className="mt-2 font-bold">{ICONS[0].description}</p>
     </li> :
     <li key={ICONS[1].id} className="mx-auto mt-8">
       <Link to={`${ICONS[1].path}`} className="block font-bold">
