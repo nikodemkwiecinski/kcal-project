@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useReducer, ReactNode } from 'react';
+import React, { createContext, useReducer, ReactNode } from 'react';
 
-import {ActionTypes, UserAction, UserInfo, ProviderType} from './UserTypes'
+import {UserAction, UserInfo, ProviderType} from './UserTypes'
 
 const initialUsers: Array<UserInfo> = [
   {
@@ -29,7 +29,7 @@ const reducer = (state: Array<UserInfo>, action: UserAction): Array<UserInfo> =>
   }
 }
 
-export const UserStoreContext = createContext<Array<UserInfo> | ProviderType>(initialUsers);
+export const UserStoreContext = createContext<ProviderType | null>(null);
 
 const UserStore: React.FC<ReactNode> = ({children}) => {
   const [users, dispatch] = useReducer(reducer, initialUsers)

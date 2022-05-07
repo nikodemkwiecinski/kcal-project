@@ -1,6 +1,11 @@
 import React from 'react';
 
-const SignIn: React.FC = () => {
+interface Props{
+  userLoged: boolean,
+  setIsUserLoged: React.Dispatch<React.SetStateAction<boolean>>,
+}
+
+const SignIn: React.FC<Props> = ({setIsUserLoged, userLoged}) => {
   return (
     <form action="">
       <input type="text" name="" id="" />

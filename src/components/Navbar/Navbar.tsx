@@ -15,7 +15,7 @@ export interface Props {
   setIsUserLoged: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Navbar: React.FC<Props> = ({userLoged, setIsUserLoged, blurToogle, setBlurToogle}) => {
+const Navbar: React.FC<Props> = ({userLoged, blurToogle, setBlurToogle, setIsUserLoged}) => {
   
   const icons: Array<IconProps> = [...USERICONS];
 
@@ -37,7 +37,7 @@ const Navbar: React.FC<Props> = ({userLoged, setIsUserLoged, blurToogle, setBlur
       {ICONS[0].jsx}
       <p className="mt-2 font-bold">{ICONS[0].description}</p>
     </li> :
-    <li key={ICONS[1].id} className="mx-auto mt-8">
+    <li key={ICONS[1].id} className="mx-auto mt-8" onClick={() => setIsUserLoged(false)}>
       <Link to={`${ICONS[1].path}`} className="block font-bold">
         {ICONS[1].jsx}
         {ICONS[1].description}

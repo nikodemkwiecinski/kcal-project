@@ -9,6 +9,7 @@ import Meals from './components/Meals/Meals';
 import Profile from './components/Profile/Profile';
 
 import './style.css'
+import UserStore from './components/UserStore/UserStore';
 
 export interface BlurProps{
   blurToogle: boolean
@@ -20,29 +21,31 @@ const App: React.FC = () => {
   const [blurToogle, setBlurToogle] = useState<boolean>(false);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={
-          <Navbar 
-            blurToogle={blurToogle}
-            userLoged={isUserLoged} 
-            setIsUserLoged={setIsUserLoged}
-            setBlurToogle={setBlurToogle}
-          />}>
-          <Route index element={
-            <Home 
+    <UserStore>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={
+            <Navbar 
               blurToogle={blurToogle}
-              userLoged={isUserLoged}
+              userLoged={isUserLoged} 
               setBlurToogle={setBlurToogle}
               setIsUserLoged={setIsUserLoged}
-            />}/>
-          <Route path='meals' element={<Meals />}/>
-          <Route path='calculator' element={<Calculator/>}/>
-          <Route path='profile' element={<Profile />}/>
-          <Route path='*' element={<NoPage />}/>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+            />}>
+            <Route index element={
+              <Home 
+                blurToogle={blurToogle}
+                userLoged={isUserLoged}
+                setBlurToogle={setBlurToogle}
+                setIsUserLoged={setIsUserLoged}
+              />}/>
+            <Route path='meals' element={<Meals />}/>
+            <Route path='calculator' element={<Calculator/>}/>
+            <Route path='profile' element={<Profile />}/>
+            <Route path='*' element={<NoPage />}/>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </UserStore>
   )
 }
  
