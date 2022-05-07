@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import Footer from '../Footer/Footer';
 import LoginPanel from '../LoginPanel/LoginPanel';
@@ -12,6 +12,22 @@ export interface BlurProps{
 }
 
 const Home: React.FC<BlurProps> = ({blurToogle, setIsUserLoged, setBlurToogle ,userLoged}) => {
+
+  useEffect(() => {
+    document.addEventListener("keydown", e => {
+      if(e.key === 'Escape'){
+        setBlurToogle(false);
+      }
+    });
+
+    return document.removeEventListener("keydown", e => {
+      if(e.key === 'Escape'){
+        setBlurToogle(false);
+      }
+    });
+
+  }, [])
+
   return (
     <>
       <section onClick={() => setBlurToogle(false)} className={`right-panel ${blurToogle ? 'active-blur' : ''}`}>
