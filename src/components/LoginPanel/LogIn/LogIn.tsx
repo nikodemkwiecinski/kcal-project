@@ -4,12 +4,11 @@ import {useNavigate} from 'react-router-dom'
 import { UserStoreContext } from '../../UserStore/UserStore';
 
 interface Props{
-  userLoged: boolean,
   setIsUserLoged: React.Dispatch<React.SetStateAction<boolean>>,
   setBlurToogle: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const LogIn: React.FC<Props> = ({userLoged, setIsUserLoged, setBlurToogle}) => {
+const LogIn: React.FC<Props> = ({setIsUserLoged, setBlurToogle}) => {
 
   const [userName, setUserName] = useState<string>('');
   const [password, setPasswrod] = useState<string>('');
