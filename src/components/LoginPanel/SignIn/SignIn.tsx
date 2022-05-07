@@ -39,9 +39,9 @@ const SignIn: React.FC<Props> = ({setIsUserLoged, setBlurToogle}) => {
     let id:number = 1;
 
     users?.users.forEach(elem => {
-      if(elem.login === userName){
+      if(elem.login === userName || userName === ''){
         validUserName = false;
-        setErrorMessage('Username already used');
+        setErrorMessage('Username already used or empty');
         setUserName('');
         setInvalidUser(true);
       }
@@ -56,11 +56,16 @@ const SignIn: React.FC<Props> = ({setIsUserLoged, setBlurToogle}) => {
       type: ActionTypes.ADD
     }
 
-    if(password === repeatPassword && validUserName){
+    if(password === repeatPassword && validUserName && (password !== '' || repeatPassword !== '')){
       users?.dispatch(newUser);
       setBlurToogle(false);
       setIsUserLoged(true);
       navigate('/meals');
+    }else if(password === '' || repeatPassword === ''){
+      setErrorMessage("Password is empty");
+      setInvalidUser(true);
+      setPasswrod('');
+      setReapeatPasswrod('');
     }else if(password !== repeatPassword){
       setErrorMessage("Passwords doesn't match");
       setInvalidUser(true);

@@ -64,7 +64,7 @@ const LogIn: React.FC<Props> = ({setIsUserLoged, setBlurToogle}) => {
         </label>
         <input type="submit" value='Submit' className='block bg-dark-blue mx-auto 2xl:h-10 h-8 2xl:w-32 w-24 mt-8 text-white font-bold rounded shadow '/>
       </form>
-      <p className={`text-red-600 ${invalidUser ? 'block' : 'hidden'} font-bold w-1/2 mx-auto mt-5`}>Username or password is incorrect</p>
+      <p className={`text-red-600 ${invalidUser ? 'block' : 'hidden'} font-bold w-1/2 mx-auto mt-5 text-center`}>Username or password is incorrect</p>
     </>
   )
 }
