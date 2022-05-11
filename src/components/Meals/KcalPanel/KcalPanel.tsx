@@ -14,15 +14,19 @@ const KcalPanel: React.FC = () => {
   const users = useContext(UserStoreContext);
 
   const changeDate = (param: string) => {
-    const date: Date = new Date();
-    param === 'increment' ? date.setDate(date.getDate()+1) : date.setDate(date.getDate()-1);
+    const date: Date = new Date(currDay);
+    if(param === 'increment'){
+      date.setDate(date.getDate()+1)
+    }else if(param === 'decrement'){
+      date.setDate(date.getDate()-1);
+    }
     setCurrDay(date);
   }
 
   return (
     <section>
       <header className='flex'>
-        <button onClick={() => changeDate('increment')}>
+        <button onClick={() => changeDate('decrement')}>
           <FontAwesomeIcon icon={solid('caret-left')}/>
         </button>
         <div>
@@ -30,10 +34,10 @@ const KcalPanel: React.FC = () => {
             {WEEKDAY[currDay.getDay()]}
           </p>
           <p>
-            {`${currDay.getDate()}.${currDay.getMonth()+1}.${currDay.getFullYear()}`}
+            {`${currDay.getDate()}.${currDay.getMonth() + 1 < 10 ? '0' + (currDay.getMonth()+1) : currDay.getMonth()+1}.${currDay.getFullYear()}`}
           </p>
         </div>
-        <button onClick={() => changeDate('decrement')}>
+        <button onClick={() => changeDate('increment')}>
           <FontAwesomeIcon icon={solid('caret-right')}/>
         </button>
       </header>
