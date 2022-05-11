@@ -89,7 +89,7 @@ const SignIn: React.FC<Props> = ({setIsUserLoged, setBlurToogle}) => {
           <p className='font-bold'>Reapeat Password</p>
           <input type="password" value={repeatPassword} name='password2' onChange={handleInput} className='block w-full bg-extra-light-blue rounded shadow 2xl:h-6 mt-2'/>
         </label>
-        <input type="submit" value='Submit' className='block bg-dark-blue mx-auto 2xl:h-10 h-8 2xl:w-32 w-24 mt-8 text-white font-bold rounded shadow '/>
+        <input type="submit" value='Submit' className='block bg-dark-blue mx-auto 2xl:h-10 h-8 2xl:w-32 w-24 mt-8 text-white font-bold rounded shadow cursor-pointer'/>
       </form>
       <p className={`text-red-600 ${invalidUser ? 'block' : 'hidden'} font-bold w-1/2 mx-auto mt-5 text-center`}>{errorMessage}</p>
     </>
