@@ -1,3 +1,24 @@
+interface Kalories{
+  protein: number,
+  fat: number,
+  carbs: number
+}
+
+interface Product{
+  productName: string,
+  productKcal: Array<Kalories>
+}
+
+interface Meal{
+  mealName: string,
+  products: Array<Product>
+}
+
+interface EatingDay{
+  date: Date,
+  meals: Array<Meal>
+}
+
 export interface UserInfo {
   id: number,
   name?: string,
@@ -6,7 +27,8 @@ export interface UserInfo {
   password: string,
   height?: number,
   weight?: number,
-  age?: number
+  age?: number,
+  meals?: Array<EatingDay>
 }
 
 export enum ActionTypes {
