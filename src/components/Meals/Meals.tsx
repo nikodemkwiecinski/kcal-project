@@ -6,8 +6,9 @@ import Footer from '../Footer/Footer';
 const Meals: React.FC = () => {
   return (
     <section className='right-panel'>
-      <div className='right-panel-content bg-grey-bg'>
+      <div className='right-panel-content bg-grey-bg flex justify-around'>
         <KcalPanel/>
+        <div className='h-half w-1/3'></div>
       </div>
       <Footer></Footer>
     </section>

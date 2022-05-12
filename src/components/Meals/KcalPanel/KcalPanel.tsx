@@ -24,23 +24,24 @@ const KcalPanel: React.FC = () => {
   }
 
   return (
-    <section>
-      <header className='flex'>
-        <button onClick={() => changeDate('decrement')}>
+    <section className='w-1/2 h-8/10 bg-white shadow-lg rounded flex flex-col my-auto'>
+      <header className='flex text-dark-blue mx-auto my-4'>
+        <button onClick={() => changeDate('decrement')} className='mr-8 text-3xl'>
           <FontAwesomeIcon icon={solid('caret-left')}/>
         </button>
-        <div>
-          <p>
+        <div className='text-xl'>
+          <p className='font-bold text-center'>
             {WEEKDAY[currDay.getDay()]}
           </p>
-          <p>
+          <p className='font-bold'>
             {`${currDay.getDate()}.${currDay.getMonth() + 1 < 10 ? '0' + (currDay.getMonth()+1) : currDay.getMonth()+1}.${currDay.getFullYear()}`}
           </p>
         </div>
-        <button onClick={() => changeDate('increment')}>
+        <button onClick={() => changeDate('increment')} className='ml-8 text-3xl'>
           <FontAwesomeIcon icon={solid('caret-right')}/>
         </button>
       </header>
+      <hr className='border-dark-blue border-solid w-10/12 mx-auto'/>
     </section>
   )
 }
