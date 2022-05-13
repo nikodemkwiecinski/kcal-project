@@ -1,6 +1,6 @@
-import React, { createContext, useReducer, ReactNode } from 'react';
+import React, { createContext, useReducer, ReactNode, useState } from 'react';
 
-import {UserAction, UserInfo, ProviderType} from './UserTypes'
+import {ActiveUserType, UserAction, UserInfo, ProviderType} from './UserTypes'
 
 const initialUsers: Array<UserInfo> = [
   {
@@ -30,13 +30,17 @@ const reducer = (state: Array<UserInfo>, action: UserAction): Array<UserInfo> =>
 }
 
 export const UserStoreContext = createContext<ProviderType | null>(null);
+export const ActiveUser = createContext<ActiveUserType | null>(null);
 
 const UserStore: React.FC<ReactNode> = ({children}) => {
   const [users, dispatch] = useReducer(reducer, initialUsers)
+  const [activeUser, setActiveUser] = useState<number>(-1)
 
   return ( 
     <UserStoreContext.Provider value={{users: users, dispatch: dispatch}}> 
-      {children}
+      <ActiveUser.Provider value={{activeUser, setActiveUser}}>
+        {children}
+      </ActiveUser.Provider>
     </UserStoreContext.Provider>  
    );
 }

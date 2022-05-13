@@ -1,8 +1,8 @@
 import React, {useContext, useState} from 'react';
 import {useNavigate} from 'react-router-dom'
 
-import { UserStoreContext } from '../../UserStore/UserStore'
-import {ActionTypes, UserAction} from '../../UserStore/UserTypes'
+import { ActiveUser, UserStoreContext } from '../../UserStore/UserStore'
+import {ActionTypes, UserAction, UserInfo} from '../../UserStore/UserTypes'
 
 interface Props{
   setBlurToogle: React.Dispatch<React.SetStateAction<boolean>>,
@@ -20,6 +20,7 @@ const SignIn: React.FC<Props> = ({setIsUserLoged, setBlurToogle}) => {
   let navigate = useNavigate();
 
   const users = useContext(UserStoreContext);
+  const activeUser = useContext(ActiveUser);
 
   const handleInput:React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const {name, value} = event.target
@@ -36,7 +37,7 @@ const SignIn: React.FC<Props> = ({setIsUserLoged, setBlurToogle}) => {
     event.preventDefault();
 
     let validUserName: boolean = true;
-    let id:number = 1;
+    let id:number = users?.users[users.users.length - 1].id as number + 1;
 
     users?.users.forEach(elem => {
       if(elem.login === userName || userName === ''){
@@ -58,6 +59,7 @@ const SignIn: React.FC<Props> = ({setIsUserLoged, setBlurToogle}) => {
 
     if(password === repeatPassword && validUserName && (password !== '' || repeatPassword !== '')){
       users?.dispatch(newUser);
+      activeUser?.setActiveUser(id);
       setBlurToogle(false);
       setIsUserLoged(true);
       navigate('/meals');

@@ -46,3 +46,8 @@ export interface ProviderType {
   users: Array<UserInfo>,
   dispatch: React.Dispatch<UserAction>
 }
+
+export interface ActiveUserType {
+  activeUser: number,
+  setActiveUser: React.Dispatch<React.SetStateAction<number>>
+}

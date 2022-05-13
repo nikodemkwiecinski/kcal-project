@@ -1,7 +1,7 @@
 import React, { useState, useContext} from 'react';
 import {useNavigate} from 'react-router-dom'
 
-import { UserStoreContext } from '../../UserStore/UserStore';
+import { ActiveUser, UserStoreContext } from '../../UserStore/UserStore';
 
 interface Props{
   setIsUserLoged: React.Dispatch<React.SetStateAction<boolean>>,
@@ -17,6 +17,7 @@ const LogIn: React.FC<Props> = ({setIsUserLoged, setBlurToogle}) => {
   let navigate = useNavigate();
 
   const users = useContext(UserStoreContext);
+  const activeUser = useContext(ActiveUser);
 
   const handleInput:React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const {name, value} = event.target
@@ -35,6 +36,7 @@ const LogIn: React.FC<Props> = ({setIsUserLoged, setBlurToogle}) => {
     users?.users.forEach(elem => {
       if(elem.login === userName && elem.password === password){
         validateUser = true;
+        activeUser?.setActiveUser(elem.id);
       }
     })
 
