@@ -1,102 +1,42 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
+import { ActiveUser, UserStoreContext } from '../../../UserStore/UserStore';
 
-const Meal: React.FC = () => {
+interface Props{
+  mealName: string
+}
+
+const MealHeader: React.FC<Props> = ({mealName}) => {
+
+  const [totalKcal, setTotalKcal] = useState<number>(0);
+  const [protein, setProtein] = useState<number>(0);
+  const [fat, setFat] = useState<number>(0);
+  const [carbs, setCarbs] = useState<number>(0);
+
+  const activeUser = useContext(ActiveUser);
+  const users = useContext(UserStoreContext);
+
   return (
-    <section className=' overflow-y-scroll'>
+    <>
       <div>
-        <div>
-          <p>Breakfast</p>
-          <p>{550} kcal</p>
-        </div>
-        <div>
-          <p>Total</p>
-          <div className='flex'>
-            <span className='block'>
-              {50}
-            </span>
-            <span className='block'>
-              {50}
-            </span>
-            <span className='block'>
-              {50}
-            </span>
-          </div>
-        </div>
-        <div>
-          <p>Snack 1</p>
-          <p>{550} kcal</p>
-        </div>
-        <div>
-          <p>Total</p>
-          <div className='flex'>
-            <span className='block'>
-              {50}
-            </span>
-            <span className='block'>
-              {50}
-            </span>
-            <span className='block'>
-              {50}
-            </span>
-          </div>
-        </div>
-        <div>
-          <p>Lunch</p>
-          <p>{550} kcal</p>
-        </div>
-        <div>
-          <p>Total</p>
-          <div className='flex'>
-            <span className='block'>
-              {50}
-            </span>
-            <span className='block'>
-              {50}
-            </span>
-            <span className='block'>
-              {50}
-            </span>
-          </div>
-        </div>
-        <div>
-          <p>Snack 2</p>
-          <p>{550} kcal</p>
-        </div>
-        <div>
-          <p>Total</p>
-          <div className='flex'>
-            <span className='block'>
-              {50}
-            </span>
-            <span className='block'>
-              {50}
-            </span>
-            <span className='block'>
-              {50}
-            </span>
-          </div>
-        </div>
-        <div>
-          <p>Dinner</p>
-          <p>{550} kcal</p>
-        </div>
-        <div>
-          <p>Total</p>
-          <div className='flex'>
-            <span className='block'>
-              {50}
-            </span>
-            <span className='block'>
-              {50}
-            </span>
-            <span className='block'>
-              {50}
-            </span>
-          </div>
+        <p>{mealName}</p>
+        <p>{totalKcal} kcal</p>
+      </div>
+      <div>
+        <p>Total</p>
+        <div className='flex'>
+          <span className='block'>
+            {protein}
+          </span>
+          <span className='block'>
+            {fat}
+          </span>
+          <span className='block'>
+            {carbs}
+          </span>
         </div>
       </div>
-    </section>
+    </>
   )
 }
 
-export default Meal;
+export default MealHeader;

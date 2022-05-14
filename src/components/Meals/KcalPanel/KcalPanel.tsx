@@ -5,9 +5,10 @@ import { UserStoreContext } from '../../UserStore/UserStore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
-import Meal from './Meal/Meal';
+import MealHeader from './Meal/Meal';
 
 const WEEKDAY: Array<string> = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const MEALS: Array<string> = ['Breakfast', 'Snack 1', 'Lunch', 'Snack 2', 'Dinner'];
 
 const KcalPanel: React.FC = () => {
 
@@ -24,6 +25,12 @@ const KcalPanel: React.FC = () => {
     }
     setCurrDay(date);
   }
+
+  const meals = MEALS.map(elem => (
+    <li className='flex'> 
+      <MealHeader mealName={elem}/>
+    </li>
+  ))
 
   return (
     <section className='w-1/2 h-8/10 bg-white shadow-lg rounded flex flex-col my-auto'>
@@ -43,8 +50,12 @@ const KcalPanel: React.FC = () => {
           <FontAwesomeIcon icon={solid('caret-right')}/>
         </button>
       </header>
-      <hr className='border-dark-blue border-solid w-10/12 mx-auto'/>
-      <Meal></Meal>
+      <hr className='border-dark-blue border-solid w-10/12 mx-auto mb-2'/>
+      <section className='overflow-y-auto'>
+        <ul>
+          {meals}
+        </ul>
+      </section>
     </section>
   )
 }
