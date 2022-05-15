@@ -1,11 +1,11 @@
 import React, {useContext, useState} from 'react';
 
-import { UserStoreContext } from '../../UserStore/UserStore';
+import { ActiveUser, UserStoreContext } from '../../UserStore/UserStore';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
-import MealHeader from './Meal/Meal';
+import MealHeader from './MealHeader/MealHeader';
 
 const WEEKDAY: Array<string> = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const MEALS: Array<string> = ['Breakfast', 'Snack 1', 'Lunch', 'Snack 2', 'Dinner'];
@@ -13,8 +13,13 @@ const MEALS: Array<string> = ['Breakfast', 'Snack 1', 'Lunch', 'Snack 2', 'Dinne
 const KcalPanel: React.FC = () => {
 
   const [currDay, setCurrDay] = useState(new Date());
+  const [totalKcal, setTotalKcal] = useState<number>(0);
+  const [totalProtein, setTotalProtein] = useState<number>(0);
+  const [totalFat, setTotalFat] = useState<number>(0);
+  const [totalCarbs, setTotalCarbs] = useState<number>(0);
 
   const users = useContext(UserStoreContext);
+  const activeUser = useContext(ActiveUser);
 
   const changeDate = (param: string) => {
     const date: Date = new Date(currDay);
@@ -27,7 +32,7 @@ const KcalPanel: React.FC = () => {
   }
 
   const meals = MEALS.map(elem => (
-    <li className='flex'> 
+    <li className='mb-2' key={`${elem}10`}> 
       <MealHeader mealName={elem}/>
     </li>
   ))
@@ -50,12 +55,31 @@ const KcalPanel: React.FC = () => {
           <FontAwesomeIcon icon={solid('caret-right')}/>
         </button>
       </header>
-      <hr className='border-dark-blue border-solid w-10/12 mx-auto mb-2'/>
+      <hr className='bg-extra-light-blue border border-solid w-10/12 mx-auto mb-2'/>
       <section className='overflow-y-auto'>
         <ul>
           {meals}
         </ul>
       </section>
+      <hr className='bg-extra-light-blue border border-solid w-10/12 mx-auto mt-2'/>
+      <div className='flex justify-around text-dark-blue my-3 text-sm'>
+        <div>
+          <p className='text-center font-bold'>Calories:</p>
+          <p className='text-center font-bold'>{totalKcal}/{0}</p>
+        </div>
+        <div>
+          <p className='text-center font-bold'>Proteins:</p>
+          <p className='text-center font-bold'>{totalProtein}/{0}</p>
+        </div>
+        <div>
+          <p className='text-center font-bold'>Fats:</p>
+          <p className='text-center font-bold'>{totalFat}/{0}</p>
+        </div>
+        <div>
+          <p className='text-center font-bold'>Carbs:</p>
+          <p className='text-center font-bold'>{totalCarbs}/{0}</p>
+        </div>
+      </div>
     </section>
   )
 }

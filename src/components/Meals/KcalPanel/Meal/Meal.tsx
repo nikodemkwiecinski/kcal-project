@@ -1,42 +1,42 @@
-import React, { useContext, useState } from 'react';
-import { ActiveUser, UserStoreContext } from '../../../UserStore/UserStore';
+import React, { SetStateAction } from 'react';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 interface Props{
-  mealName: string
+  mealName: string,
+  totalKcal: number,
+  protein: number,
+  fat: number,
+  carbs: number,
 }
 
-const MealHeader: React.FC<Props> = ({mealName}) => {
-
-  const [totalKcal, setTotalKcal] = useState<number>(0);
-  const [protein, setProtein] = useState<number>(0);
-  const [fat, setFat] = useState<number>(0);
-  const [carbs, setCarbs] = useState<number>(0);
-
-  const activeUser = useContext(ActiveUser);
-  const users = useContext(UserStoreContext);
+const Meal: React.FC<Props> = ({carbs, fat, mealName, protein, totalKcal}) => {
 
   return (
-    <>
-      <div>
-        <p>{mealName}</p>
-        <p>{totalKcal} kcal</p>
-      </div>
-      <div>
-        <p>Total</p>
-        <div className='flex'>
-          <span className='block'>
-            {protein}
-          </span>
-          <span className='block'>
-            {fat}
-          </span>
-          <span className='block'>
-            {carbs}
-          </span>
+    <li>
+      <div className='flex w-9/12 mx-auto justify-between my-2'>
+        <div className='text-dark-blue w-3/12'>
+          <p className='font-bold text-center'>{mealName}</p>
+          <p className='font-bold text-center'>{totalKcal} kcal</p>
         </div>
+        <div className='text-dark-blue w-1/3 my-auto'>
+          <div className='flex justify-around'>
+            <span className='block text-center'>
+              {protein}g
+            </span>
+            <span className='block text-center'>
+              {fat}g
+            </span>
+            <span className='block text-center'>
+              {carbs}g
+            </span>
+          </div>
+        </div>
+        <FontAwesomeIcon icon={solid('minus')} className='text-dark-blue text-xl my-auto cursor-pointer'></FontAwesomeIcon>
       </div>
-    </>
+    </li>
   )
 }
 
-export default MealHeader;
+export default Meal;

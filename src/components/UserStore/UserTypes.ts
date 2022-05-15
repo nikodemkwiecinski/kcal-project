@@ -19,6 +19,13 @@ interface EatingDay{
   meals: Array<Meal>
 }
 
+interface UserSttings{
+  totalKcal: number,
+  proteinAmout: number,
+  fatAmount: number,
+  carbsAmount: number
+}
+
 export interface UserInfo {
   id: number,
   name?: string,
@@ -28,7 +35,8 @@ export interface UserInfo {
   height?: number,
   weight?: number,
   age?: number,
-  meals?: Array<EatingDay>
+  meals?: Array<EatingDay>,
+  settings?: UserSttings
 }
 
 export enum ActionTypes {
