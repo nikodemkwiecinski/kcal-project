@@ -5,12 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 import Meal from "../Meal/Meal"
+import {ActionTypes, UserAction} from "../../../UserStore/UserTypes"
 
 interface Props{
-  mealName: string
+  mealName: string,
+  day: Date
 }
 
-const MealHeader: React.FC<Props> = ({mealName}) => {
+const MealHeader: React.FC<Props> = ({mealName, day}) => {
 
   const [totalKcal, setTotalKcal] = useState<number>(0);
   const [protein, setProtein] = useState<number>(0);
@@ -19,6 +21,10 @@ const MealHeader: React.FC<Props> = ({mealName}) => {
 
   const activeUser = useContext(ActiveUser);
   const users = useContext(UserStoreContext);
+
+  const addMealToUser = (date: Date ) => {
+
+  }
 
   return (
     <>

@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {useNavigate} from 'react-router-dom'
 
 import { ActiveUser, UserStoreContext } from '../../UserStore/UserStore'
-import {ActionTypes, UserAction, UserInfo} from '../../UserStore/UserTypes'
+import {ActionTypes, UserAction} from '../../UserStore/UserTypes'
 
 interface Props{
   setBlurToogle: React.Dispatch<React.SetStateAction<boolean>>,

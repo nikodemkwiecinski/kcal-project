@@ -33,7 +33,7 @@ const KcalPanel: React.FC = () => {
 
   const meals = MEALS.map(elem => (
     <li className='mb-2' key={`${elem}10`}> 
-      <MealHeader mealName={elem}/>
+      <MealHeader mealName={elem} day={currDay}/>
     </li>
   ))
 
@@ -56,13 +56,13 @@ const KcalPanel: React.FC = () => {
         </button>
       </header>
       <hr className='bg-extra-light-blue border border-solid w-10/12 mx-auto mb-2'/>
-      <section className='overflow-y-auto'>
+      <section className='overflow-y-auto h-80%'>
         <ul>
           {meals}
         </ul>
       </section>
       <hr className='bg-extra-light-blue border border-solid w-10/12 mx-auto mt-2'/>
-      <div className='flex justify-around text-dark-blue my-3 text-sm'>
+      <div className='flex justify-around place-items-end text-dark-blue my-3 text-sm'>
         <div>
           <p className='text-center font-bold'>Calories:</p>
           <p className='text-center font-bold'>{totalKcal}/{0}</p>
