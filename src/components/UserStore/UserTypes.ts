@@ -35,6 +35,7 @@ export interface UserInfo {
   height?: number,
   weight?: number,
   age?: number,
+  activity?: number,
   meals?: Array<EatingDay>,
   settings?: UserSttings
 }

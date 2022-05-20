@@ -21,6 +21,8 @@ const KcalPanel: React.FC = () => {
   const users = useContext(UserStoreContext);
   const activeUser = useContext(ActiveUser);
 
+  console.log(users)
+
   const changeDate = (param: string) => {
     const date: Date = new Date(currDay);
     if(param === 'increment'){
