@@ -23,10 +23,17 @@ const PersonalData: React.FC<Props> = () => {
   const [activity, setActivity] = useState<string>("low");
   const [age, setAge] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
+  const [isActive, setIsAvtive] = useState<boolean>(false)
 
   const activeUser = useContext(ActiveUser);
   const users = useContext(UserStoreContext);
   const currentUser = users?.users.find(elem => elem.id === activeUser?.activeUser);
+
+  const dataSaved = isActive ? <p className='mt-4 text-center font-bold'>Data saved</p> : null;
+
+  const handleDataSaved = () => {
+    setIsAvtive(false);
+  }
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -38,6 +45,7 @@ const PersonalData: React.FC<Props> = () => {
 
     const newUser: UserAction = {
       payload: {
+        ...currentUser,
         id,
         login,
         password,
@@ -50,6 +58,8 @@ const PersonalData: React.FC<Props> = () => {
     }
 
     users?.dispatch(newUser);
+    setIsAvtive(true);
+    setTimeout(handleDataSaved, 3000);
   }
 
   return (
@@ -80,6 +90,7 @@ const PersonalData: React.FC<Props> = () => {
       <label className='text-center font-bold'>
         <input type="submit" value="Submit" className='block bg-dark-blue mx-auto 2xl:h-10 h-8 2xl:w-32 w-24 mt-8 text-white font-bold rounded shadow cursor-pointer' />
       </label>
+      {dataSaved}
     </form>
   )
 } 
