@@ -1,15 +1,22 @@
 import React, { useContext, useState } from 'react';
+import {useNavigate} from 'react-router-dom'
 
 import { ActiveUser, UserStoreContext } from '../../UserStore/UserStore';
 import {ActionTypes, UserAction, UserInfo} from "../../UserStore/UserTypes"
 
-const UserSettings: React.FC = () => {
+interface Props{
+  setIsUserLoged: React.Dispatch<React.SetStateAction<boolean>>,
+}
+
+const UserSettings: React.FC<Props> = ({setIsUserLoged}) => {
   
   const [username, setUsername] = useState<string>("");
   const [newPassword, setPassword] = useState<string>("");
   const [isActive, setIsAvtive] = useState<boolean>(false);
   const [isNameEmpty, setIsNameEmpty] = useState<boolean>(false);
   const [isPasswordEmpty, setIsPasswordEmpty] = useState<boolean>(false);
+
+  let navigate = useNavigate();
 
   const activeUser = useContext(ActiveUser);
   const users = useContext(UserStoreContext);
@@ -79,6 +86,24 @@ const UserSettings: React.FC = () => {
     }
   }
 
+  const handleDeleteUser = () => {
+    
+    const {id, login, password} = currentUser as UserInfo;
+    
+    const delUser: UserAction = {
+      payload: {
+        id,
+        login,
+        password
+      },
+      type: ActionTypes.DELETE
+    }
+
+    users?.dispatch(delUser);
+    setIsUserLoged(false);
+    navigate('/');
+  }
+
   return(
     <form onSubmit={event => event.preventDefault()} className='shadow text-dark-blue rounded border-2 w-2/5 p-4 border-extra-light-blue border-solid 2xl:overflow-auto  lg:overflow-y-scroll'>
       <h2 className='text-dark-blue w-4/5 mx-auto text-center font-bold text-3xl my-2'>User Settings</h2>
@@ -95,6 +120,10 @@ const UserSettings: React.FC = () => {
       </label>
       <label className='text-center font-bold block'>
         <button onClick={handlePasswordChange} className='block bg-dark-blue mx-auto 2xl:h-10 h-8 2xl:w-32 w-24 mt-8 text-white font-bold rounded shadow cursor-pointer' >Submit</button>
+      </label>
+      <label className='text-center font-bold block mt-8'>
+        <h3 className='text-dark-blue text-center font-bold text-2xl'>Delete User</h3>
+        <button onClick={handleDeleteUser} className='block bg-red-700 mx-auto 2xl:h-10 h-8 2xl:w-32 w-24 mt-2 text-black font-bold rounded shadow cursor-pointer' >Submit</button>
       </label>
       {dataSaved}
       {emptyName}

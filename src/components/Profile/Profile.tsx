@@ -4,7 +4,11 @@ import Footer from '../Footer/Footer';
 import PersonalData from './PersonalData/PersonalData';
 import UserSettings from './UserSettings/UserSettings';
 
-const Profile: React.FC = () => {
+interface Props{
+  setIsUserLoged: React.Dispatch<React.SetStateAction<boolean>>,
+}
+
+const Profile: React.FC<Props> = ({setIsUserLoged}) => {
   return (
     <section className='right-panel bg-grey-bg'>
       <div className='right-panel-content flex'>
@@ -13,7 +17,7 @@ const Profile: React.FC = () => {
           <hr className='bg-extra-light-blue border border-solid w-10/12 mx-auto'/>
           <div className='flex my-auto h-4/6 justify-around'>
             <PersonalData/>
-            <UserSettings/>
+            <UserSettings setIsUserLoged={setIsUserLoged}/>
           </div>
         </section>
       </div>

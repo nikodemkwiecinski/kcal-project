@@ -40,7 +40,7 @@ const App: React.FC = () => {
               />}/>
             <Route path='meals' element={<Meals />}/>
             <Route path='calculator' element={<Calculator/>}/>
-            <Route path='profile' element={<Profile />}/>
+            <Route path='profile' element={<Profile setIsUserLoged={setIsUserLoged} />}/>
             <Route path='*' element={<NoPage />}/>
           </Route>
         </Routes>
