@@ -2,6 +2,7 @@ import React from 'react';
 
 import Footer from '../Footer/Footer';
 import PersonalData from './PersonalData/PersonalData';
+import UserSettings from './UserSettings/UserSettings';
 
 const Profile: React.FC = () => {
   return (
@@ -12,7 +13,7 @@ const Profile: React.FC = () => {
           <hr className='bg-extra-light-blue border border-solid w-10/12 mx-auto'/>
           <div className='flex my-auto h-4/6 justify-around'>
             <PersonalData/>
-            <div className='w-2/5 2xL:h-48 h-32'></div>
+            <UserSettings/>
           </div>
         </section>
       </div>
