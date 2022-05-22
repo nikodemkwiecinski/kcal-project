@@ -23,43 +23,55 @@ const PersonalData: React.FC<Props> = () => {
   const [activity, setActivity] = useState<string>("low");
   const [age, setAge] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
-  const [isActive, setIsAvtive] = useState<boolean>(false)
+  const [isActive, setIsAvtive] = useState<boolean>(false);
+  const [isWrong, setIsWrong] = useState<boolean>(false);
 
   const activeUser = useContext(ActiveUser);
   const users = useContext(UserStoreContext);
   const currentUser = users?.users.find(elem => elem.id === activeUser?.activeUser);
 
   const dataSaved = isActive ? <p className='mt-4 text-center font-bold'>Data saved</p> : null;
+  const errorMessage = isWrong ? <p className='mt-4 text-center font-bold text-red-700'>All values have to be positive</p> : null;
 
   const handleDataSaved = () => {
     setIsAvtive(false);
   }
 
+  const handleError = () => {
+    setIsWrong(false);
+  }
+
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
 
-    const {id, login, password} = currentUser as UserInfo;
 
-    type AccesKey = keyof typeof ACTIVITY_KINDS;
-    const userActivity = `${activity}` as AccesKey
+    if(weight > 1 && age > 1 && height > 1){
+      const {id, login, password} = currentUser as UserInfo;
 
-    const editedUser: UserAction = {
-      payload: {
-        ...currentUser,
-        id,
-        login,
-        password,
-        age: age,
-        height: height,
-        weight: weight,
-        activity: ACTIVITY_KINDS[userActivity]
-      },
-      type: ActionTypes.EDIT
-    }
+      type AccesKey = keyof typeof ACTIVITY_KINDS;
+      const userActivity = `${activity}` as AccesKey
 
-    users?.dispatch(editedUser);
-    setIsAvtive(true);
-    setTimeout(handleDataSaved, 3000);
+      const editedUser: UserAction = {
+        payload: {
+          ...currentUser,
+          id,
+          login,
+          password,
+          age: age,
+          height: height,
+          weight: weight,
+          activity: ACTIVITY_KINDS[userActivity]
+        },
+        type: ActionTypes.EDIT
+      }
+
+      users?.dispatch(editedUser);
+      setIsAvtive(true);
+      setTimeout(handleDataSaved, 3000);
+    }else{
+      setIsWrong(true);
+      setTimeout(handleError, 3000);
+    } 
   }
 
   return (
@@ -91,6 +103,7 @@ const PersonalData: React.FC<Props> = () => {
         <input type="submit" value="Submit" className='block bg-dark-blue mx-auto 2xl:h-10 h-8 2xl:w-32 w-24 mt-8 text-white font-bold rounded shadow cursor-pointer' />
       </label>
       {dataSaved}
+      {errorMessage}
     </form>
   )
 } 

@@ -8,53 +8,75 @@ const UserSettings: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [newPassword, setPassword] = useState<string>("");
   const [isActive, setIsAvtive] = useState<boolean>(false);
+  const [isNameEmpty, setIsNameEmpty] = useState<boolean>(false);
+  const [isPasswordEmpty, setIsPasswordEmpty] = useState<boolean>(false);
 
   const activeUser = useContext(ActiveUser);
   const users = useContext(UserStoreContext);
   const currentUser = users?.users.find(elem => elem.id === activeUser?.activeUser);
 
   const dataSaved = isActive ? <p className='mt-4 text-center font-bold'>Data saved</p> : null;
+  const emptyName = isNameEmpty ? <p className='mt-4 text-center font-bold text-red-700'>Username has to be at least 3 characters long</p> : null;
+  const emptyPassword = isPasswordEmpty ? <p className='mt-4 text-center font-bold text-red-700'>Password has to be at least 3 characters long</p> : null;
 
   const handleDataSaved = () => {
     setIsAvtive(false);
   }
 
+  const handleUsernameError = () => {
+    setIsNameEmpty(false)
+  }
+
+  const handlePasswordError = () => {
+    setIsPasswordEmpty(false);
+  }
+
   const handleUsernameChange = () => {
 
-    const {id, password} = currentUser as UserInfo;
+    if(username.length > 2){
+      const {id, password} = currentUser as UserInfo;
 
-    const editedUser: UserAction = {
-      payload: {
-        ...currentUser,
-        id,
-        login: username,
-        password
-      },
-      type: ActionTypes.EDIT
+      const editedUser: UserAction = {
+        payload: {
+          ...currentUser,
+          id,
+          login: username,
+          password
+        },
+        type: ActionTypes.EDIT
+      }
+
+      users?.dispatch(editedUser);
+      setIsAvtive(true);
+      setTimeout(handleDataSaved, 3000);
+    }else{
+      setIsNameEmpty(true);
+      setTimeout(handleUsernameError,3000);
     }
-
-    users?.dispatch(editedUser);
-    setIsAvtive(true);
-    setTimeout(handleDataSaved, 3000);
   }
 
   const handlePasswordChange = () => {
 
-    const {id, login} = currentUser as UserInfo;
+    if(newPassword.length > 2){
+      const {id, login} = currentUser as UserInfo;
 
-    const editedUser: UserAction = {
-      payload: {
-        ...currentUser,
-        id,
-        login,
-        password: newPassword
-      },
-      type: ActionTypes.EDIT
+      const editedUser: UserAction = {
+        payload: {
+          ...currentUser,
+          id,
+          login,
+          password: newPassword
+        },
+        type: ActionTypes.EDIT
+      }
+
+      users?.dispatch(editedUser);
+      setIsAvtive(true);
+      setTimeout(handleDataSaved, 3000);
+    }else{
+      setIsPasswordEmpty(true);
+      setTimeout(handlePasswordError,3000);
     }
-
-    users?.dispatch(editedUser);
-    setIsAvtive(true);
-    setTimeout(handleDataSaved, 3000);
   }
 
   return(
@@ -75,6 +97,8 @@ const UserSettings: React.FC = () => {
         <button onClick={handlePasswordChange} className='block bg-dark-blue mx-auto 2xl:h-10 h-8 2xl:w-32 w-24 mt-8 text-white font-bold rounded shadow cursor-pointer' >Submit</button>
       </label>
       {dataSaved}
+      {emptyName}
+      {emptyPassword}
     </form>
   )
 }
