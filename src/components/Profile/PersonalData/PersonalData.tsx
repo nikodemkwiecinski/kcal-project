@@ -43,7 +43,7 @@ const PersonalData: React.FC<Props> = () => {
     type AccesKey = keyof typeof ACTIVITY_KINDS;
     const userActivity = `${activity}` as AccesKey
 
-    const newUser: UserAction = {
+    const editedUser: UserAction = {
       payload: {
         ...currentUser,
         id,
@@ -57,17 +57,25 @@ const PersonalData: React.FC<Props> = () => {
       type: ActionTypes.EDIT
     }
 
-    users?.dispatch(newUser);
+    users?.dispatch(editedUser);
     setIsAvtive(true);
     setTimeout(handleDataSaved, 3000);
   }
 
   return (
-    <form onSubmit={handleSubmit} className='shadow text-dark-blue rounded border-2 w-2/5 p-4 border-dark-blue border-solid overflow-y-scroll'>
+    <form onSubmit={handleSubmit} className='shadow text-dark-blue rounded border-2 w-2/5 p-4 border-extra-light-blue border-solid 2xl:overflow-auto lg:overflow-y-scroll'>
       <h2 className='text-dark-blue w-4/5 mx-auto text-center font-bold text-3xl my-2'>Personal Data</h2>
       <label className='text-center font-bold mt-2'>
         Weight
         <input type="number" id='weight' value={weight} onChange={event => setWeight(parseInt(event.target.value))} className='block w-2/4 mx-auto bg-extra-light-blue rounded shadow 2xl:h-6 mt-2'/>
+      </label>
+      <label className='text-center font-bold mt-2'>
+        Age
+        <input type="number" id="age" value={age} onChange={event => setAge(parseInt(event.target.value))} className='block w-2/4 mx-auto bg-extra-light-blue rounded shadow 2xl:h-6 mt-2'/>
+      </label>
+      <label className='text-center font-bold mt-2'>
+        Height
+        <input type="number" id="height" value={height} onChange={event => setHeight(parseInt(event.target.value))} className='block w-2/4 mx-auto bg-extra-light-blue rounded shadow 2xl:h-6 mt-2'/>
       </label>
       <label className='text-center font-bold mt-2'>
         Daily activity
@@ -78,14 +86,6 @@ const PersonalData: React.FC<Props> = () => {
           <option value="medium/high">Medium/High</option>
           <option value="high">High</option>
         </select>
-      </label>
-      <label className='text-center font-bold mt-2'>
-        Age
-        <input type="number" id="age" value={age} onChange={event => setAge(parseInt(event.target.value))} className='block w-2/4 mx-auto bg-extra-light-blue rounded shadow 2xl:h-6 mt-2'/>
-      </label>
-      <label className='text-center font-bold mt-2'>
-        Height
-        <input type="number" id="height" value={height} onChange={event => setHeight(parseInt(event.target.value))} className='block w-2/4 mx-auto bg-extra-light-blue rounded shadow 2xl:h-6 mt-2'/>
       </label>
       <label className='text-center font-bold'>
         <input type="submit" value="Submit" className='block bg-dark-blue mx-auto 2xl:h-10 h-8 2xl:w-32 w-24 mt-8 text-white font-bold rounded shadow cursor-pointer' />
