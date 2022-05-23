@@ -1,12 +1,12 @@
 interface Kalories{
-  protein: number,
-  fat: number,
   carbs: number
+  fat: number,
+  protein: number,
 }
 
 interface Product{
-  productName: string,
   productKcal: Array<Kalories>
+  productName: string,
 }
 
 interface Meal{
@@ -20,24 +20,30 @@ interface EatingDay{
 }
 
 interface UserSttings{
-  totalKcal: number,
-  proteinAmout: number,
-  fatAmount: number,
   carbsAmount: number
+  fatAmount: number,
+  proteinAmout: number,
+  totalKcal: number,
 }
 
 export interface UserInfo {
-  id: number,
-  name?: string,
-  surName?: string,
-  login: string,
-  password: string,
-  height?: number,
-  weight?: number,
-  age?: number,
   activity?: number,
+  age?: number,
+  calories?: number,
+  carbs?: number,
+  fats?: number,
+  height?: number,
+  id: number,
+  login: string,
   meals?: Array<EatingDay>,
-  settings?: UserSttings
+  name?: string,
+  password: string,
+  proteins?: number,
+  settings?: UserSttings,
+  surName?: string,
+  steps?: number,
+  water?: number
+  weight?: number,
 }
 
 export enum ActionTypes {
@@ -47,8 +53,8 @@ export enum ActionTypes {
 }
 
 export interface UserAction {
-  type: ActionTypes
   payload: UserInfo
+  type: ActionTypes
 }
 
 export interface ProviderType {
