@@ -1,4 +1,5 @@
 import React, { useContext, useState  } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { ActiveUser, UserStoreContext } from '../../UserStore/UserStore';
 import {ActionTypes, UserAction, UserInfo} from "../../UserStore/UserTypes"
@@ -7,17 +8,23 @@ import './MacroPanel.css'
 
 const MacroPanel: React.FC = () => {
 
-  const [calories, setCalories] = useState<number>(0);
-  const [protein, setProtein] = useState<number>(0);
-  const [fat, setFat] = useState<number>(0);
-  const [carbs, setCarbs] = useState<number>(0);
+  const [calories, setCalories] = useState<number>(2000);
+  const [protein, setProtein] = useState<number>(100);
+  const [fat, setFat] = useState<number>(67);
+  const [carbs, setCarbs] = useState<number>(250);
 
   const activeUser = useContext(ActiveUser);
   const users = useContext(UserStoreContext);
   const currentUser = users?.users.find(elem => elem.id === activeUser?.activeUser);
 
+  let navigate = useNavigate();
+
+  const handleSubmit = (event: React.SyntheticEvent) => {
+
+  }
+
   return (
-    <form onSubmit={event => event.preventDefault()} className='shadow text-dark-blue rounded border-2 w-2/5 p-4 border-extra-light-blue border-solid 2xl:overflow-auto lg:overflow-y-scroll'>
+    <form onSubmit={handleSubmit} className='shadow text-dark-blue rounded border-2 w-2/5 p-4 border-extra-light-blue border-solid 2xl:overflow-auto lg:overflow-y-scroll'>
       <h2 className='text-dark-blue w-4/5 mx-auto text-center font-bold text-3xl my-2'>Estimate your daily macros automatically</h2>
       <label>
         <button className='bg-green-500 mx-auto 2xl:h-10 h-8 2xl:w-32 w-24 mt-2 text-white font-bold rounded shadow cursor-pointer'>Estimate</button>
