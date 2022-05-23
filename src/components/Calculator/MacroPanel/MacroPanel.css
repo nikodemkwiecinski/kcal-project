@@ -1,0 +1,17 @@
+label{
+  @apply block;
+  @apply mt-2;
+  @apply text-center;
+  @apply font-bold;
+}
+
+input[type = number]{
+  @apply block;
+  @apply w-2/4;
+  @apply mx-auto;
+  @apply bg-extra-light-blue;
+  @apply rounded;
+  @apply shadow;
+  @apply mt-2;
+  @apply 2xl:h-6;
+}
