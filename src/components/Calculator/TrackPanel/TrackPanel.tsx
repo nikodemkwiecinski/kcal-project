@@ -31,7 +31,8 @@ const TrackPanel: React.FC = () => {
       const {id, login, password} = currentUser as UserInfo;
 
       const editedUser: UserAction = {
-       payload: { ...currentUser,
+       payload: { 
+        ...currentUser,
         id,
         login,
         password,

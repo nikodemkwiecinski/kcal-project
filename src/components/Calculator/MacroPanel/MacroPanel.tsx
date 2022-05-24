@@ -1,5 +1,4 @@
 import React, { useContext, useState  } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { ActiveUser, UserStoreContext } from '../../UserStore/UserStore';
 import {ActionTypes, UserAction, UserInfo} from "../../UserStore/UserTypes"
@@ -12,23 +11,53 @@ const MacroPanel: React.FC = () => {
   const [protein, setProtein] = useState<number>(100);
   const [fat, setFat] = useState<number>(67);
   const [carbs, setCarbs] = useState<number>(250);
+  const [isCorrect, setIsCorrect] = useState<boolean>(false);
+  const [isWrong, setIsWrong] = useState<boolean>(false);
 
   const activeUser = useContext(ActiveUser);
   const users = useContext(UserStoreContext);
   const currentUser = users?.users.find(elem => elem.id === activeUser?.activeUser);
 
-  let navigate = useNavigate();
+  const errorMessage = isWrong ? <p className='mt-4 text-center font-bold text-red-700'>All values must be positive</p> : null;
+  const dataSavedMessage = isCorrect ? <p className='mt-4 text-center font-bold'>Data saved</p> : null;
+
+  const handleDataSaved = () => {
+    setIsCorrect(false);
+  }
+
+  const handleError = () => {
+    setIsWrong(false);
+  }
 
   const handleSubmit = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    if(protein > 1 && fat > 1 && carbs > 1 && calories > 1){
+      const {id, login, password} = currentUser as UserInfo;
 
+      const editedUser: UserAction = {
+        payload: {
+          ...currentUser,
+          id,
+          login,
+          password,
+          carbs,
+          fats: fat,
+          proteins: protein
+        },
+        type: ActionTypes.EDIT
+      }
+
+      users?.dispatch(editedUser);
+      setIsCorrect(true);
+      setTimeout(handleDataSaved, 3000);
+    }else{
+      setIsWrong(true);
+      setTimeout(handleError, 3000);
+    }
   }
 
   return (
     <form onSubmit={handleSubmit} className='shadow text-dark-blue rounded border-2 w-2/5 p-4 border-extra-light-blue border-solid 2xl:overflow-auto lg:overflow-y-scroll'>
-      <h2 className='text-dark-blue w-4/5 mx-auto text-center font-bold text-3xl my-2'>Estimate your daily macros automatically</h2>
-      <label>
-        <button className='bg-green-500 mx-auto 2xl:h-10 h-8 2xl:w-32 w-24 mt-2 text-white font-bold rounded shadow cursor-pointer'>Estimate</button>
-      </label>
       <h2 className='text-dark-blue w-4/5 mx-auto text-center font-bold text-3xl my-2'>Input macros by yourself</h2>
       <label htmlFor="">
         Daily calories
@@ -49,6 +78,8 @@ const MacroPanel: React.FC = () => {
       <label htmlFor="">
         <input type="submit" value="Submit" className='block bg-dark-blue mx-auto 2xl:h-10 h-8 2xl:w-32 w-24 mt-8 text-white font-bold rounded shadow cursor-pointer'/>
       </label>
+      {errorMessage}
+      {dataSavedMessage}
     </form>
   )
 }
