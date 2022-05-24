@@ -51,7 +51,7 @@ const TrackPanel: React.FC = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className='shadow text-dark-blue rounded border-2 w-2/5 p-4 border-extra-light-blue border-solid 2xl:overflow-auto lg:overflow-y-scroll'>
+    <form onSubmit={handleSubmit} className='shadow text-dark-blue rounded border-2 w-4/5 p-4 border-extra-light-blue border-solid 2xl:overflow-auto lg:overflow-y-scroll'>
       <h2 className='text-dark-blue w-4/5 mx-auto text-center font-bold text-3xl my-2'>Water and steps</h2>
       <label htmlFor="" className='block text-center font-bold mt-2'>
         Daily amount of steps
