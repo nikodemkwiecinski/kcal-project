@@ -5,7 +5,7 @@ label{
   @apply font-bold;
 }
 
-input[type = number]{
+input[type = number], input[type= date]{
   @apply block;
   @apply w-2/4;
   @apply mx-auto;

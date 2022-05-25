@@ -58,7 +58,7 @@ const MacroPanel: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className='shadow text-dark-blue rounded border-2 w-4/5 p-4 border-extra-light-blue border-solid 2xl:overflow-auto lg:overflow-y-scroll'>
-      <h2 className='text-dark-blue w-4/5 mx-auto text-center font-bold text-3xl my-2'>Input macros by yourself</h2>
+      <h2 className='text-dark-blue w-4/5 mx-auto text-center font-bold text-2xl my-2'>Input macros by yourself</h2>
       <label htmlFor="">
         Daily calories
         <input type="number" name="" id="" value={calories} onChange={event => setCalories(parseInt(event.target.value))}/>
