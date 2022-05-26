@@ -45,7 +45,7 @@ const PersonalData: React.FC<Props> = () => {
     event.preventDefault();
 
 
-    if(weight > 1 && age > 1 && height > 1){
+    if(weight > 0 && age > 0 && height > 0){
       const {id, login, password} = currentUser as UserInfo;
 
       type AccesKey = keyof typeof ACTIVITY_KINDS;
