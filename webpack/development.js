@@ -1,7 +1,7 @@
 module.exports = {
   devServer: {
     static: "./public",
-    port: 5000,
+    port: 5001,
   },
   devtool: "inline-source-map",
   module: {
