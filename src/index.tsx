@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 // @ts-ignore
-import {createRoot } from 'react-dom/client'
+import { createRoot } from "react-dom/client";
 
-import App from './App';
+import App from "./App";
 
-const container = document.getElementById('root')
+const container = document.getElementById("root");
 
-if(container){
+if (container) {
   const root = createRoot(container);
-  root.render(<App/>)
+  root.render(<App />);
 }
