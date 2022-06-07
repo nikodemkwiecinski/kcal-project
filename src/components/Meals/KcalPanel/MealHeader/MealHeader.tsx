@@ -40,6 +40,7 @@ const MealHeader: React.FC<Props> = ({ mealName, day }) => {
     event.preventDefault();
     setIsActive(false);
     let newMeal: MealProps;
+    let error = false;
     const options = {
       method: "GET",
       url: "http://127.0.0.1:5500/data",
@@ -51,30 +52,47 @@ const MealHeader: React.FC<Props> = ({ mealName, day }) => {
     await axios
       .request(options)
       .then((res) => {
-        const { description, foodNutrients } = res.data[0] as any;
-        const protein = foodNutrients[0].value * Math.round(grams / 100),
-          fat = foodNutrients[1].value * Math.round(grams / 100),
-          carbs = foodNutrients[2].value * Math.round(grams / 100);
-
-        newMeal = {
-          mealName: description.slice(0, description.indexOf(",") + 1),
-          carbs,
-          fat,
-          protein,
-          totalKcal: Math.round(protein * 4 + fat * 9 + carbs * 4),
-          id: mealsArray.length ? mealsArray[mealsArray.length - 1].id + 1 : 1,
-        };
+        console.log(res.data, grams);
+        if (res.data.length > 0 && grams > 0) {
+          const { foodNutrients } = res.data[0] as any;
+          const protein = parseInt(
+              (foodNutrients[0].value * Math.round(grams / 100)).toFixed(2)
+            ),
+            fat = parseInt(
+              (foodNutrients[1].value * Math.round(grams / 100)).toFixed(2)
+            ),
+            carbs = parseInt(
+              (foodNutrients[2].value * Math.round(grams / 100)).toFixed(2)
+            );
+          newMeal = {
+            mealName:
+              ingredient.slice(0, 1).toUpperCase() +
+              ingredient.slice(1, ingredient.length),
+            carbs,
+            fat,
+            protein,
+            totalKcal: Math.round(protein * 4 + fat * 9 + carbs * 4),
+            id: mealsArray.length
+              ? mealsArray[mealsArray.length - 1].id + 1
+              : 1,
+          };
+        } else {
+          alert("Ingredient not found or grams are not positive value");
+          error = true;
+        }
       })
       .catch((err) => console.error(err));
 
-    setMealsArray((prev) => [...prev, newMeal]);
-    //@ts-ignore
-    const { carbs, fat, protein, totalKcal } = newMeal;
+    if (!error) {
+      setMealsArray((prev) => [...prev, newMeal]);
+      //@ts-ignore
+      const { carbs, fat, protein, totalKcal } = newMeal;
 
-    setProtein((prev) => prev + protein);
-    setFat((prev) => prev + fat);
-    setCarbs((prev) => prev + carbs);
-    setTotalKcal((prev) => prev + totalKcal);
+      setProtein((prev) => prev + protein);
+      setFat((prev) => prev + fat);
+      setCarbs((prev) => prev + carbs);
+      setTotalKcal((prev) => prev + totalKcal);
+    }
     setIngredient("");
     setGrams(0);
   };
