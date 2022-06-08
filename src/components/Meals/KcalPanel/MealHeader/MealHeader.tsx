@@ -7,11 +7,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 import Meal from "../Meal/Meal";
-import { ActionTypes, UserAction } from "../../../UserStore/UserTypes";
+import {
+  ActionTypes,
+  UserAction,
+  Meal as Meals,
+} from "../../../UserStore/UserTypes";
 
 interface Props {
   mealName: string;
-  day: Date;
+  mealArray: Array<Meals>;
 }
 
 interface MealProps {
@@ -23,7 +27,7 @@ interface MealProps {
   id: number;
 }
 
-const MealHeader: React.FC<Props> = ({ mealName, day }) => {
+const MealHeader: React.FC<Props> = ({ mealName, mealArray }) => {
   const [totalKcal, setTotalKcal] = useState<number>(0);
   const [protein, setProtein] = useState<number>(0);
   const [fat, setFat] = useState<number>(0);

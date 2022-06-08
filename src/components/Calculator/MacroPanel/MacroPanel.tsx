@@ -50,6 +50,7 @@ const MacroPanel: React.FC = () => {
           carbs,
           fats: fat,
           proteins: protein,
+          calories,
         },
         type: ActionTypes.EDIT,
       };

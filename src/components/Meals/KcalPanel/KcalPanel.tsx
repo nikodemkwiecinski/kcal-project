@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { ActiveUser, UserStoreContext } from "../../UserStore/UserStore";
 
@@ -6,6 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 import MealHeader from "./MealHeader/MealHeader";
+
+import {
+  ActionTypes,
+  EatingDay,
+  Meal,
+  UserAction,
+  UserInfo,
+} from "./../../UserStore/UserTypes";
 
 const WEEKDAY: Array<string> = [
   "Sunday",
@@ -30,9 +38,13 @@ const KcalPanel: React.FC = () => {
   const [totalProtein, setTotalProtein] = useState<number>(0);
   const [totalFat, setTotalFat] = useState<number>(0);
   const [totalCarbs, setTotalCarbs] = useState<number>(0);
+  const [mealsArray, setMealsArray] = useState<Array<Meal>>([]);
 
   const users = useContext(UserStoreContext);
   const activeUser = useContext(ActiveUser);
+  const currentUser = users?.users.find(
+    (elem) => elem.id === activeUser?.activeUser
+  );
 
   const changeDate = (param: string) => {
     const date: Date = new Date(currDay);
@@ -44,11 +56,38 @@ const KcalPanel: React.FC = () => {
     setCurrDay(date);
   };
 
+  useEffect(() => {
+    const currArr = currentUser?.meals?.find((elem) => elem.date === currDay);
+    if (currArr === undefined) {
+      currentUser?.meals?.push({ date: currDay, meals: [] });
+      setMealsArray([]);
+    } else {
+      setMealsArray(currArr.meals);
+    }
+  }, [currDay]);
+
   const meals = MEALS.map((elem) => (
     <li className="mb-2" key={`${elem}10`}>
-      <MealHeader mealName={elem} day={currDay} />
+      <MealHeader mealName={elem} mealArray={mealsArray} />
     </li>
   ));
+
+  const addMealToUser = () => {
+    const { id, login, password } = currentUser as UserInfo;
+    const editedUser: UserAction = {
+      payload: {
+        ...currentUser,
+        id,
+        login,
+        password,
+        meals: [
+          ...(currentUser?.meals as EatingDay[]),
+          { date: currDay, meals: mealsArray },
+        ],
+      },
+      type: ActionTypes.ADD,
+    };
+  };
 
   return (
     <section className="w-1/2 h-8/10 bg-white shadow-lg rounded flex flex-col my-auto">
@@ -61,7 +100,7 @@ const KcalPanel: React.FC = () => {
         </button>
         <div className="2xl:text-xl text-lg">
           <p className="font-bold text-center">{WEEKDAY[currDay.getDay()]}</p>
-          <p className="font-bold">
+          <p className="font-bold text-center">
             {`${currDay.getDate()}.${
               currDay.getMonth() + 1 < 10
                 ? "0" + (currDay.getMonth() + 1)
@@ -85,25 +124,33 @@ const KcalPanel: React.FC = () => {
         <div>
           <p className="text-center font-bold">Calories:</p>
           <p className="text-center font-bold">
-            {totalKcal}/{0}
+            {totalKcal}
+            {currentUser?.calories === undefined
+              ? null
+              : `/${currentUser.calories}`}
           </p>
         </div>
         <div>
           <p className="text-center font-bold">Proteins:</p>
           <p className="text-center font-bold">
-            {totalProtein}/{0}
+            {totalProtein}
+            {currentUser?.proteins === undefined
+              ? null
+              : `/${currentUser.proteins}`}
           </p>
         </div>
         <div>
           <p className="text-center font-bold">Fats:</p>
           <p className="text-center font-bold">
-            {totalFat}/{0}
+            {totalFat}
+            {currentUser?.fats === undefined ? null : `/${currentUser.fats}`}
           </p>
         </div>
         <div>
           <p className="text-center font-bold">Carbs:</p>
           <p className="text-center font-bold">
-            {totalCarbs}/{0}
+            {totalCarbs}
+            {currentUser?.carbs === undefined ? null : `/${currentUser.carbs}`}
           </p>
         </div>
       </div>

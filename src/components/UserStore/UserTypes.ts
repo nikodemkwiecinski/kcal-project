@@ -9,12 +9,12 @@ interface Product {
   productName: string;
 }
 
-interface Meal {
+export interface Meal {
   mealName: string;
   products: Array<Product>;
 }
 
-interface EatingDay {
+export interface EatingDay {
   date: Date;
   meals: Array<Meal>;
 }
