@@ -56,7 +56,6 @@ const MealHeader: React.FC<Props> = ({ mealName, mealArray }) => {
     await axios
       .request(options)
       .then((res) => {
-        console.log(res.data, grams);
         if (res.data.length > 0 && grams > 0) {
           const { foodNutrients } = res.data[0] as any;
           const protein = parseInt(
