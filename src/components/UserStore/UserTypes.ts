@@ -1,17 +1,11 @@
-interface Kalories {
+export interface Meal {
+  mealName: string;
+  mealType: string;
   carbs: number;
   fat: number;
   protein: number;
-}
-
-interface Product {
-  productKcal: Array<Kalories>;
-  productName: string;
-}
-
-export interface Meal {
-  mealName: string;
-  products: Array<Product>;
+  kcal: number;
+  id: number;
 }
 
 export interface EatingDay {
