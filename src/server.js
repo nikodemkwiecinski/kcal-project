@@ -16,7 +16,10 @@ app.get("/data", (request, response) => {
   const ingredients = request.query.ingredients;
 
   const params = {
-    api_key: process.env.REACT_APP_API_KEY,
+    api_key:
+      process.env.REACT_APP_API_KEY === undefined
+        ? "DEMO_KEY"
+        : process.env.REACT_APP_API_KEY,
     query: ingredients,
     dataType: ["Survey (FNDDS)"],
     pageSize: 1,
