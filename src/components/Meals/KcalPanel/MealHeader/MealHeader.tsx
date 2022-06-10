@@ -16,34 +16,23 @@ import {
 interface Props {
   mealName: string;
   mealArray: Array<Meals>;
+  setMealArray: React.Dispatch<React.SetStateAction<Meals[]>>;
 }
 
-interface MealProps {
-  mealName: string;
-  totalKcal: number;
-  protein: number;
-  fat: number;
-  carbs: number;
-  id: number;
-}
-
-const MealHeader: React.FC<Props> = ({ mealName, mealArray }) => {
+const MealHeader: React.FC<Props> = ({ mealName, mealArray, setMealArray }) => {
   const [totalKcal, setTotalKcal] = useState<number>(0);
   const [protein, setProtein] = useState<number>(0);
   const [fat, setFat] = useState<number>(0);
   const [carbs, setCarbs] = useState<number>(0);
-  let [mealsArray, setMealsArray] = useState<Array<MealProps>>([]);
+  //let [mealsArray, setMealsArray] = useState<Array<MealProps>>([]);
   const [isActive, setIsActive] = useState(false);
   const [ingredient, setIngredient] = useState("");
   const [grams, setGrams] = useState(0);
 
-  const activeUser = useContext(ActiveUser);
-  const users = useContext(UserStoreContext);
-
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     setIsActive(false);
-    let newMeal: MealProps;
+    let newMeal: Meals;
     let error = false;
     const options = {
       method: "GET",
@@ -58,14 +47,14 @@ const MealHeader: React.FC<Props> = ({ mealName, mealArray }) => {
       .then((res) => {
         if (res.data.length > 0 && grams > 0) {
           const { foodNutrients } = res.data[0] as any;
-          const protein = parseInt(
-              (foodNutrients[0].value * Math.round(grams / 100)).toFixed(2)
+          const protein = parseFloat(
+              (foodNutrients[0].value * (grams / 100)).toFixed(2)
             ),
-            fat = parseInt(
-              (foodNutrients[1].value * Math.round(grams / 100)).toFixed(2)
+            fat = parseFloat(
+              (foodNutrients[1].value * (grams / 100)).toFixed(2)
             ),
-            carbs = parseInt(
-              (foodNutrients[2].value * Math.round(grams / 100)).toFixed(2)
+            carbs = parseFloat(
+              (foodNutrients[2].value * (grams / 100)).toFixed(2)
             );
           newMeal = {
             mealName:
@@ -74,10 +63,9 @@ const MealHeader: React.FC<Props> = ({ mealName, mealArray }) => {
             carbs,
             fat,
             protein,
-            totalKcal: Math.round(protein * 4 + fat * 9 + carbs * 4),
-            id: mealsArray.length
-              ? mealsArray[mealsArray.length - 1].id + 1
-              : 1,
+            kcal: Math.round(protein * 4 + fat * 9 + carbs * 4),
+            id: mealArray.length ? mealArray[mealArray.length - 1].id + 1 : 1,
+            mealType: mealName,
           };
         } else {
           alert("Ingredient not found or grams are not positive value");
@@ -87,7 +75,7 @@ const MealHeader: React.FC<Props> = ({ mealName, mealArray }) => {
       .catch((err) => console.error(err));
 
     if (!error) {
-      setMealsArray((prev) => [...prev, newMeal]);
+      setMealArray((prev) => [...prev, newMeal]);
       //@ts-ignore
       const { carbs, fat, protein, totalKcal } = newMeal;
 
@@ -100,21 +88,19 @@ const MealHeader: React.FC<Props> = ({ mealName, mealArray }) => {
     setGrams(0);
   };
 
-  const meals = mealsArray.map((elem) => (
+  const meals = mealArray.map((elem) => (
     <Meal
       carbs={elem.carbs}
       fat={elem.fat}
       id={elem.id}
       mealName={elem.mealName}
       protein={elem.protein}
-      totalKcal={elem.totalKcal}
+      totalKcal={elem.kcal}
       key={elem.id}
-      mealsArray={mealsArray}
-      setMealsArray={setMealsArray}
+      mealsArray={mealArray}
+      setMealsArray={setMealArray}
     />
   ));
-
-  const addMealToUser = (date: Date) => {};
 
   return (
     <>

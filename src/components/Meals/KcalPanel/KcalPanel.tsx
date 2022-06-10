@@ -46,6 +46,8 @@ const KcalPanel: React.FC = () => {
     (elem) => elem.id === activeUser?.activeUser
   );
 
+  console.log(currentUser);
+
   const changeDate = (param: string) => {
     const date: Date = new Date(currDay);
     if (param === "increment") {
@@ -66,12 +68,6 @@ const KcalPanel: React.FC = () => {
     }
   }, [currDay]);
 
-  const meals = MEALS.map((elem) => (
-    <li className="mb-2" key={`${elem}10`}>
-      <MealHeader mealName={elem} mealArray={mealsArray} />
-    </li>
-  ));
-
   const addMealToUser = () => {
     const { id, login, password } = currentUser as UserInfo;
     const editedUser: UserAction = {
@@ -80,14 +76,34 @@ const KcalPanel: React.FC = () => {
         id,
         login,
         password,
-        meals: [
-          ...(currentUser?.meals as EatingDay[]),
-          { date: currDay, meals: mealsArray },
-        ],
+        meals:
+          currentUser?.meals !== undefined
+            ? [
+                ...(currentUser?.meals as EatingDay[]),
+                { date: currDay, meals: mealsArray },
+              ]
+            : [{ date: currDay, meals: mealsArray }],
       },
-      type: ActionTypes.ADD,
+      type: ActionTypes.EDIT,
     };
+    users?.dispatch(editedUser);
   };
+
+  useEffect(() => {
+    if (mealsArray.length > 0) {
+      addMealToUser();
+    }
+  }, [mealsArray]);
+
+  const meals = MEALS.map((elem) => (
+    <li className="mb-2" key={`${elem}10`}>
+      <MealHeader
+        mealName={elem}
+        mealArray={mealsArray.filter((e) => e.mealType === elem)}
+        setMealArray={setMealsArray}
+      />
+    </li>
+  ));
 
   return (
     <section className="w-1/2 h-8/10 bg-white shadow-lg rounded flex flex-col my-auto">
