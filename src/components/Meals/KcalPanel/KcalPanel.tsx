@@ -33,7 +33,8 @@ const MEALS: Array<string> = [
 ];
 
 const KcalPanel: React.FC = () => {
-  const [currDay, setCurrDay] = useState(new Date());
+  const newDate = new Date();
+  const [currDay, setCurrDay] = useState(new Date(`${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`));
   const [totalKcal, setTotalKcal] = useState<number>(0);
   const [totalProtein, setTotalProtein] = useState<number>(0);
   const [totalFat, setTotalFat] = useState<number>(0);
@@ -46,8 +47,6 @@ const KcalPanel: React.FC = () => {
     (elem) => elem.id === activeUser?.activeUser
   );
 
-  console.log(currentUser);
-
   const changeDate = (param: string) => {
     const date: Date = new Date(currDay);
     if (param === "increment") {
@@ -59,9 +58,8 @@ const KcalPanel: React.FC = () => {
   };
 
   useEffect(() => {
-    const currArr = currentUser?.meals?.find((elem) => elem.date === currDay);
+    const currArr = currentUser?.meals?.find((elem) => elem.date.getTime() === currDay.getTime());
     if (currArr === undefined) {
-      currentUser?.meals?.push({ date: currDay, meals: [] });
       setMealsArray([]);
     } else {
       setMealsArray(currArr.meals);
@@ -79,8 +77,7 @@ const KcalPanel: React.FC = () => {
         meals:
           currentUser?.meals !== undefined
             ? [
-                ...(currentUser?.meals as EatingDay[]),
-                { date: currDay, meals: mealsArray },
+                {date: currDay, meals: [...mealsArray]}
               ]
             : [{ date: currDay, meals: mealsArray }],
       },

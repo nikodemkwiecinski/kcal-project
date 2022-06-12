@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import { ActiveUser, UserStoreContext } from "../../../UserStore/UserStore";
+import React, { useState } from "react";
 import axios from "axios";
 import "regenerator-runtime";
 
@@ -8,8 +7,6 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 import Meal from "../Meal/Meal";
 import {
-  ActionTypes,
-  UserAction,
   Meal as Meals,
 } from "../../../UserStore/UserTypes";
 
@@ -111,7 +108,7 @@ const MealHeader: React.FC<Props> = ({ mealName, mealArray, setMealArray }) => {
         </div>
         <div className="text-dark-blue w-1/3">
           <p className="font-bold text-center">Total</p>
-          <div className="flex justify-around">
+          <div className="flex justify-around gap-1">
             <span className="block text-center">{protein}g</span>
             <span className="block text-center">{fat}g</span>
             <span className="block text-center">{carbs}g</span>

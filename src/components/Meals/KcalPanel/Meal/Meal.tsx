@@ -37,7 +37,7 @@ const Meal: React.FC<Props> = ({
           <p className="font-bold text-center">{totalKcal} kcal</p>
         </div>
         <div className="text-dark-blue w-1/3 my-auto">
-          <div className="flex justify-around">
+          <div className="flex justify-around gap-1">
             <span className="block text-center">{protein}g</span>
             <span className="block text-center">{fat}g</span>
             <span className="block text-center">{carbs}g</span>
