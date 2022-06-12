@@ -34,11 +34,11 @@ const MEALS: Array<string> = [
 
 const KcalPanel: React.FC = () => {
   const newDate = new Date();
-  const [currDay, setCurrDay] = useState(new Date(`${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`));
-  const [totalKcal, setTotalKcal] = useState<number>(0);
-  const [totalProtein, setTotalProtein] = useState<number>(0);
-  const [totalFat, setTotalFat] = useState<number>(0);
-  const [totalCarbs, setTotalCarbs] = useState<number>(0);
+  const [currDay, setCurrDay] = useState(
+    new Date(
+      `${newDate.getFullYear()}-${newDate.getMonth() + 1}-${newDate.getDate()}`
+    )
+  );
   const [mealsArray, setMealsArray] = useState<Array<Meal>>([]);
 
   const users = useContext(UserStoreContext);
@@ -58,7 +58,9 @@ const KcalPanel: React.FC = () => {
   };
 
   useEffect(() => {
-    const currArr = currentUser?.meals?.find((elem) => elem.date.getTime() === currDay.getTime());
+    const currArr = currentUser?.meals?.find(
+      (elem) => elem.date.getTime() === currDay.getTime()
+    );
     if (currArr === undefined) {
       setMealsArray([]);
     } else {
@@ -76,9 +78,7 @@ const KcalPanel: React.FC = () => {
         password,
         meals:
           currentUser?.meals !== undefined
-            ? [
-                {date: currDay, meals: [...mealsArray]}
-              ]
+            ? [...currentUser.meals, { date: currDay, meals: [...mealsArray] }]
             : [{ date: currDay, meals: mealsArray }],
       },
       type: ActionTypes.EDIT,
@@ -96,11 +96,28 @@ const KcalPanel: React.FC = () => {
     <li className="mb-2" key={`${elem}10`}>
       <MealHeader
         mealName={elem}
-        mealArray={mealsArray.filter((e) => e.mealType === elem)}
+        mealsArray={mealsArray}
         setMealArray={setMealsArray}
       />
     </li>
   ));
+
+  const totalKcal = mealsArray.reduce(
+    (total, curValue) => total + curValue.kcal,
+    0
+  );
+  const totalProtien = mealsArray.reduce(
+    (total, curValue) => total + curValue.protein,
+    0
+  );
+  const totalFat = mealsArray.reduce(
+    (total, curValue) => total + curValue.fat,
+    0
+  );
+  const totalCarbs = mealsArray.reduce(
+    (total, curValue) => total + curValue.carbs,
+    0
+  );
 
   return (
     <section className="w-1/2 h-8/10 bg-white shadow-lg rounded flex flex-col my-auto">
@@ -136,7 +153,15 @@ const KcalPanel: React.FC = () => {
       <div className="flex justify-around place-items-end text-dark-blue my-3 text-sm">
         <div>
           <p className="text-center font-bold">Calories:</p>
-          <p className="text-center font-bold">
+          <p
+            className={`text-center font-bold ${
+              currentUser?.calories === undefined
+                ? null
+                : totalKcal > currentUser.calories
+                ? "text-red-600"
+                : null
+            }`}
+          >
             {totalKcal}
             {currentUser?.calories === undefined
               ? null
@@ -145,8 +170,20 @@ const KcalPanel: React.FC = () => {
         </div>
         <div>
           <p className="text-center font-bold">Proteins:</p>
-          <p className="text-center font-bold">
-            {totalProtein}
+          <p
+            className={`text-center font-bold ${
+              currentUser?.proteins === undefined
+                ? null
+                : totalProtien > currentUser.proteins
+                ? "text-red-600"
+                : null
+            }`}
+          >
+            {parseFloat(
+              mealsArray
+                .reduce((total, curValue) => total + curValue.protein, 0)
+                .toFixed(2)
+            )}
             {currentUser?.proteins === undefined
               ? null
               : `/${currentUser.proteins}`}
@@ -154,15 +191,39 @@ const KcalPanel: React.FC = () => {
         </div>
         <div>
           <p className="text-center font-bold">Fats:</p>
-          <p className="text-center font-bold">
-            {totalFat}
+          <p
+            className={`text-center font-bold ${
+              currentUser?.fats === undefined
+                ? null
+                : totalFat > currentUser.fats
+                ? "text-red-600"
+                : null
+            }`}
+          >
+            {parseFloat(
+              mealsArray
+                .reduce((total, curValue) => total + curValue.fat, 0)
+                .toFixed(2)
+            )}
             {currentUser?.fats === undefined ? null : `/${currentUser.fats}`}
           </p>
         </div>
         <div>
           <p className="text-center font-bold">Carbs:</p>
-          <p className="text-center font-bold">
-            {totalCarbs}
+          <p
+            className={`text-center font-bold ${
+              currentUser?.carbs === undefined
+                ? null
+                : totalCarbs > currentUser.carbs
+                ? "text-red-600"
+                : null
+            }`}
+          >
+            {parseFloat(
+              mealsArray
+                .reduce((total, curValue) => total + curValue.carbs, 0)
+                .toFixed(2)
+            )}
             {currentUser?.carbs === undefined ? null : `/${currentUser.carbs}`}
           </p>
         </div>

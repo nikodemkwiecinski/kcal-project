@@ -6,25 +6,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 import Meal from "../Meal/Meal";
-import {
-  Meal as Meals,
-} from "../../../UserStore/UserTypes";
+import { Meal as Meals } from "../../../UserStore/UserTypes";
 
 interface Props {
   mealName: string;
-  mealArray: Array<Meals>;
+  mealsArray: Array<Meals>;
   setMealArray: React.Dispatch<React.SetStateAction<Meals[]>>;
 }
 
-const MealHeader: React.FC<Props> = ({ mealName, mealArray, setMealArray }) => {
-  const [totalKcal, setTotalKcal] = useState<number>(0);
-  const [protein, setProtein] = useState<number>(0);
-  const [fat, setFat] = useState<number>(0);
-  const [carbs, setCarbs] = useState<number>(0);
-  //let [mealsArray, setMealsArray] = useState<Array<MealProps>>([]);
+const MealHeader: React.FC<Props> = ({
+  mealName,
+  mealsArray,
+  setMealArray,
+}) => {
   const [isActive, setIsActive] = useState(false);
   const [ingredient, setIngredient] = useState("");
   const [grams, setGrams] = useState(0);
+
+  const mealArray = mealsArray.filter((e) => e.mealType === mealName);
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -61,7 +60,7 @@ const MealHeader: React.FC<Props> = ({ mealName, mealArray, setMealArray }) => {
             fat,
             protein,
             kcal: Math.round(protein * 4 + fat * 9 + carbs * 4),
-            id: mealArray.length ? mealArray[mealArray.length - 1].id + 1 : 1,
+            id: Date.now(),
             mealType: mealName,
           };
         } else {
@@ -73,13 +72,6 @@ const MealHeader: React.FC<Props> = ({ mealName, mealArray, setMealArray }) => {
 
     if (!error) {
       setMealArray((prev) => [...prev, newMeal]);
-      //@ts-ignore
-      const { carbs, fat, protein, totalKcal } = newMeal;
-
-      setProtein((prev) => prev + protein);
-      setFat((prev) => prev + fat);
-      setCarbs((prev) => prev + carbs);
-      setTotalKcal((prev) => prev + totalKcal);
     }
     setIngredient("");
     setGrams(0);
@@ -94,7 +86,7 @@ const MealHeader: React.FC<Props> = ({ mealName, mealArray, setMealArray }) => {
       protein={elem.protein}
       totalKcal={elem.kcal}
       key={elem.id}
-      mealsArray={mealArray}
+      mealsArray={mealsArray}
       setMealsArray={setMealArray}
     />
   ));
@@ -104,14 +96,38 @@ const MealHeader: React.FC<Props> = ({ mealName, mealArray, setMealArray }) => {
       <div className="flex w-10/12 mx-auto rounded p-2 bg-extra-light-blue justify-between">
         <div className="text-dark-blue w-3/12">
           <p className="font-bold text-lg text-center">{mealName}</p>
-          <p className="font-bold text-center">{totalKcal} kcal</p>
+          <p className="font-bold text-center">
+            {mealArray.reduce((total, curValue) => total + curValue.kcal, 0)}{" "}
+            kcal
+          </p>
         </div>
         <div className="text-dark-blue w-1/3">
           <p className="font-bold text-center">Total</p>
           <div className="flex justify-around gap-1">
-            <span className="block text-center">{protein}g</span>
-            <span className="block text-center">{fat}g</span>
-            <span className="block text-center">{carbs}g</span>
+            <span className="block text-center">
+              {parseFloat(
+                mealArray
+                  .reduce((total, curValue) => total + curValue.protein, 0)
+                  .toFixed(2)
+              )}
+              g
+            </span>
+            <span className="block text-center">
+              {parseFloat(
+                mealArray
+                  .reduce((total, curValue) => total + curValue.fat, 0)
+                  .toFixed(2)
+              )}
+              g
+            </span>
+            <span className="block text-center">
+              {parseFloat(
+                mealArray
+                  .reduce((total, curValue) => total + curValue.carbs, 0)
+                  .toFixed(2)
+              )}
+              g
+            </span>
           </div>
         </div>
         <FontAwesomeIcon
