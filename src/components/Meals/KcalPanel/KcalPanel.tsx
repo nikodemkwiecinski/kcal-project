@@ -9,7 +9,6 @@ import MealHeader from "./MealHeader/MealHeader";
 
 import {
   ActionTypes,
-  EatingDay,
   Meal,
   UserAction,
   UserInfo,
@@ -82,7 +81,9 @@ const KcalPanel: React.FC<Props> = ({ currDay, setCurrDay }) => {
         meals:
           currentUser?.meals !== undefined
             ? [
-                ...currentUser.meals.filter((elem, i) => i !== index),
+                ...currentUser.meals.filter(
+                  (elem) => elem.date.getTime() !== currDay.getTime()
+                ),
                 {
                   date: currDay,
                   meals: [...mealsArray],
