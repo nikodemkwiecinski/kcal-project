@@ -32,13 +32,12 @@ const MEALS: Array<string> = [
   "Dinner",
 ];
 
-const KcalPanel: React.FC = () => {
-  const newDate = new Date();
-  const [currDay, setCurrDay] = useState(
-    new Date(
-      `${newDate.getFullYear()}-${newDate.getMonth() + 1}-${newDate.getDate()}`
-    )
-  );
+interface Props {
+  currDay: Date;
+  setCurrDay: React.Dispatch<React.SetStateAction<Date>>;
+}
+
+const KcalPanel: React.FC<Props> = ({ currDay, setCurrDay }) => {
   const [mealsArray, setMealsArray] = useState<Array<Meal>>([]);
 
   const users = useContext(UserStoreContext);
@@ -70,6 +69,10 @@ const KcalPanel: React.FC = () => {
 
   const addMealToUser = () => {
     const { id, login, password } = currentUser as UserInfo;
+    const index =
+      currentUser?.meals !== undefined
+        ? currentUser.meals.findIndex((elem) => elem.date === currDay)
+        : -1;
     const editedUser: UserAction = {
       payload: {
         ...currentUser,
@@ -78,7 +81,13 @@ const KcalPanel: React.FC = () => {
         password,
         meals:
           currentUser?.meals !== undefined
-            ? [...currentUser.meals, { date: currDay, meals: [...mealsArray] }]
+            ? [
+                ...currentUser.meals.filter((elem, i) => i !== index),
+                {
+                  date: currDay,
+                  meals: [...mealsArray],
+                },
+              ]
             : [{ date: currDay, meals: mealsArray }],
       },
       type: ActionTypes.EDIT,
@@ -86,8 +95,26 @@ const KcalPanel: React.FC = () => {
     users?.dispatch(editedUser);
   };
 
+  const checkIfDifferentArrays = () => {
+    const arr = currentUser?.meals?.find(
+      (elem) => elem.date.getTime() === currDay.getTime()
+    );
+    let currArr: Meal[];
+    if (arr === undefined) {
+      return false;
+    } else {
+      currArr = arr.meals;
+      return (
+        Array.isArray(currArr) &&
+        Array.isArray(mealsArray) &&
+        mealsArray.length === currArr.length &&
+        mealsArray.every((elem, index) => elem === currArr[index])
+      );
+    }
+  };
+
   useEffect(() => {
-    if (mealsArray.length > 0) {
+    if (mealsArray.length > 0 && !checkIfDifferentArrays()) {
       addMealToUser();
     }
   }, [mealsArray]);
