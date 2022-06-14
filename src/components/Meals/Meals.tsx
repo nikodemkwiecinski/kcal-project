@@ -16,7 +16,7 @@ const Meals: React.FC = () => {
       <div className="right-panel-content bg-grey-bg flex justify-around">
         <KcalPanel currDay={currDay} setCurrDay={setCurrDay} />
         <div className="h-half w-45% bg-white shadow-lg rounded my-auto">
-          <TrackingPanel />
+          <TrackingPanel currDay={currDay} />
         </div>
       </div>
       <Footer></Footer>
