@@ -13,6 +13,12 @@ export interface EatingDay {
   meals: Array<Meal>;
 }
 
+export interface TrackDay {
+  date: Date;
+  steps: number;
+  water: number;
+}
+
 interface UserSttings {
   carbsAmount: number;
   fatAmount: number;
@@ -35,8 +41,7 @@ export interface UserInfo {
   proteins?: number;
   settings?: UserSttings;
   surName?: string;
-  steps?: number;
-  water?: number;
+  track?: Array<TrackDay>;
   weight?: number;
 }
 
