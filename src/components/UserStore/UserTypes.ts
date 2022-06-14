@@ -43,6 +43,8 @@ export interface UserInfo {
   surName?: string;
   track?: Array<TrackDay>;
   weight?: number;
+  steps?: number;
+  water?: number;
 }
 
 export enum ActionTypes {
